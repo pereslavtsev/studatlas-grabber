@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as _ from 'lodash';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { GrabberService } from '../grabber/grabber.service';
 import { FACULTY_SCHEMA } from './mocks/faculty-schema.mock';

@@ -75,3 +75,52 @@ message ListFacultiesResponse {
   repeated Faculty faculties = 1;
   string next_page_token = 2;
 }
+
+// Groups
+
+service GroupService {
+  rpc GetGroup (GetGroupRequest) returns (Group) {}
+  rpc ListGroups (ListGroupsRequest) returns (ListGroupsResponse) {}
+}
+
+message Group {
+  string id = 1;
+  string name = 2;
+  int32 year = 3;
+  string specialityId = 4;
+  string speciality = 5;
+  int32 countAll = 6;
+  int32 countCommon = 7;
+  int32 countTargeted = 8;
+  int32 countSpecial = 9;
+  string curricula = 10;
+}
+
+message GetGroupRequest {
+  string id = 1;
+  string academy_id = 2;
+}
+
+message ListGroupsRequest {
+  string academy_id = 1;
+  //string parent = 2;
+  enum OrderBy {
+    DEFAULT = 0;
+    NAME = 1;
+    YEAR = 2;
+  }
+  OrderBy order_by = 3;
+  enum FilterBy {
+    ALL = 0;
+    FACULTY = 1;
+    SPECIALITY = 2;
+  }
+  FilterBy filter_by = 4;
+  int32 related_id = 5;
+  //string page_token = 6;
+}
+
+message ListGroupsResponse {
+  repeated Group groups = 1;
+  string next_page_token = 2;
+}

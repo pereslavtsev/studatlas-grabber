@@ -23,7 +23,7 @@ export class DataGrid {
     this.rows = this.$(this.root).find(DataGrid.selectors.rows.join(', '));
   }
 
-  public extract(schema: Schema): any {
+  public extract(schema: Schema): any[] {
     const positions = {};
     schema.attributes.map(attribute => {
       positions[attribute.name] = this.headers
