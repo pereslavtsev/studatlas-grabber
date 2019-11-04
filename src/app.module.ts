@@ -6,6 +6,7 @@ import { FacultiesModule } from './faculties/faculties.module';
 import { GroupsModule } from './groups/groups.module';
 import { MongooseConfigService } from './shared/services/mongoose-config.service';
 import { SharedModule } from './shared/shared.module';
+import { DivisionsModule } from './divisions/divisions.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
     FacultiesModule,
     GroupsModule,
     SharedModule,
+    DivisionsModule,
   ],
   controllers: [],
   providers: [],

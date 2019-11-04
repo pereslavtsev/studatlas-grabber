@@ -124,3 +124,41 @@ message ListGroupsResponse {
   repeated Group groups = 1;
   string next_page_token = 2;
 }
+
+// Divisions
+
+service DivisionService {
+  rpc GetDivision (GetDivisionRequest) returns (Division) {}
+  rpc ListDivisions (ListDivisionsRequest) returns (ListDivisionsResponse) {}
+}
+
+message Division {
+  string id = 1;
+  string name = 2;
+  string abbreviation = 3;
+  string head = 4;
+  string phone = 5;
+  string room = 6;
+}
+
+message GetDivisionRequest {
+  string id = 1;
+  string academy_id = 2;
+}
+
+message ListDivisionsRequest {
+  string academy_id = 1;
+  //string parent = 2;
+  enum OrderBy {
+    DEFAULT = 0;
+    NAME = 1;
+    ABBREVIATION = 2;
+  }
+  OrderBy order_by = 3;
+  //string page_token = 4;
+}
+
+message ListDivisionsResponse {
+  repeated Division divisions = 1;
+  string next_page_token = 2;
+}
