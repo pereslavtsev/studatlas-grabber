@@ -38,3 +38,40 @@ message ListAcademiesResponse {
   string next_page_token = 2;
 }
 
+// Faculties
+
+service FacultyService {
+  rpc GetFaculty (GetFacultyRequest) returns (Faculty) {}
+  rpc ListFaculties (ListFacultiesRequest) returns (ListFacultiesResponse) {}
+}
+
+message Faculty {
+  string id = 1;
+  string name = 2;
+  string abbreviation = 3;
+  string head = 4;
+  string phone = 5;
+  string room = 6;
+}
+
+message GetFacultyRequest {
+  string id = 1;
+  string academy_id = 2;
+}
+
+message ListFacultiesRequest {
+  string academy_id = 1;
+  //string parent = 2;
+  enum OrderBy {
+    DEFAULT = 0;
+    NAME = 1;
+    ABBREVIATION = 2;
+  }
+  OrderBy order_by = 3;
+  //string page_token = 4;
+}
+
+message ListFacultiesResponse {
+  repeated Faculty faculties = 1;
+  string next_page_token = 2;
+}

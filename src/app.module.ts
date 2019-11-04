@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AcademiesModule } from './academies/academies.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MongooseConfigService } from './shared/services/mongoose-config.service';
-import * as path from 'path';
 import { ConfigModule } from 'nestjs-config';
+import * as path from 'path';
+import { FacultiesModule } from './faculties/faculties.module';
+import { GroupsModule } from './groups/groups.module';
+import { MongooseConfigService } from './shared/services/mongoose-config.service';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -13,7 +15,9 @@ import { ConfigModule } from 'nestjs-config';
     MongooseModule.forRootAsync({
       useClass: MongooseConfigService,
     }),
-    AcademiesModule,
+    FacultiesModule,
+    GroupsModule,
+    SharedModule,
   ],
   controllers: [],
   providers: [],

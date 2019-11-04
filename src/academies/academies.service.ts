@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { Academy } from './interfaces/academy.interface';
 import { InjectModel } from '@nestjs/mongoose';
 import * as _ from 'lodash';
+import { Model } from 'mongoose';
 import { AcademyOrder } from './interfaces/academy-order.enum';
+import { Academy } from './interfaces/academy.interface';
 
 @Injectable()
 export class AcademiesService {
