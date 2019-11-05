@@ -7,6 +7,7 @@ import { GroupsModule } from './groups/groups.module';
 import { MongooseConfigService } from './shared/services/mongoose-config.service';
 import { SharedModule } from './shared/shared.module';
 import { DivisionsModule } from './divisions/divisions.module';
+import { SpecialitiesModule } from './specialities/specialities.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DivisionsModule } from './divisions/divisions.module';
     GroupsModule,
     SharedModule,
     DivisionsModule,
+    SpecialitiesModule,
   ],
   controllers: [],
   providers: [],

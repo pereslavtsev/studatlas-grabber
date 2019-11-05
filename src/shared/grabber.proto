@@ -46,12 +46,19 @@ service FacultyService {
 }
 
 message Faculty {
-  string id = 1;
-  string name = 2;
-  string abbreviation = 3;
-  string head = 4;
-  string phone = 5;
-  string room = 6;
+  string type = 1;
+  string id = 2;
+  message Attributes {
+    string name = 3;
+    string abbreviation = 4;
+    string head = 5;
+    string phone = 6;
+    string room = 7;
+  }
+  Attributes attributes = 8;
+  message Relationships {
+  }
+  Relationships relationships = 9;
 }
 
 message GetFacultyRequest {
@@ -72,7 +79,7 @@ message ListFacultiesRequest {
 }
 
 message ListFacultiesResponse {
-  repeated Faculty faculties = 1;
+  repeated Faculty data = 1;
   string next_page_token = 2;
 }
 
@@ -161,4 +168,70 @@ message ListDivisionsRequest {
 message ListDivisionsResponse {
   repeated Division divisions = 1;
   string next_page_token = 2;
+}
+
+// Specialities
+
+service SpecialityService {
+  rpc GetSpeciality (GetSpecialityRequest) returns (Speciality) {}
+  rpc ListSpecialities (ListSpecialitiesRequest) returns (ListSpecialitiesResponse) {}
+  rpc ListFacultySpecialities (ListFacultySpecialitiesRequest) returns (ListSpecialitiesResponse) {}
+}
+
+message Speciality {
+  string type = 1; // specialities
+  string id = 2;
+  message Attributes {
+    string shortName = 3;
+    string name = 4;
+    string facultyId = 5;
+    string faculty = 6;
+    string divisionId = 7;
+    string division = 8;
+    string code = 9;
+    string qualification = 10;
+  }
+  Attributes attributes = 11;
+  message Relationships {
+    ListFacultiesResponse faculty = 12;
+  }
+  Relationships relationships = 13;
+}
+
+message GetSpecialityRequest {
+  string id = 1;
+  string academy_id = 2;
+}
+
+message ListSpecialitiesRequest {
+  string academy_id = 1;
+  //string parent = 2;
+  enum OrderBy {
+    DEFAULT = 0;
+    NAME = 1;
+    ABBREVIATION = 2;
+  }
+  OrderBy order_by = 3;
+  //string page_token = 4;
+}
+
+message ListFacultySpecialitiesRequest {
+  string academy_id = 1;
+  string faculty_id = 2;
+  //string parent = 3;
+  enum OrderBy {
+    DEFAULT = 0;
+    NAME = 1;
+    ABBREVIATION = 2;
+  }
+  OrderBy order_by = 4;
+  //string page_token = 5;
+}
+
+message ListSpecialitiesResponse {
+  repeated Speciality data = 1;
+  message Included {
+    Faculty booleanValue = 1;
+  }
+  repeated Faculty included = 14;
 }
