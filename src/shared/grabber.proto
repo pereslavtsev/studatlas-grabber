@@ -48,7 +48,7 @@ message ListAcademiesResponse {
 // Faculties
 
 service FacultyService {
-  rpc GetFaculty (GetFacultyRequest) returns (Faculty) {}
+  rpc GetFaculty (GetFacultyRequest) returns (ListFacultiesResponse) {}
   rpc ListFaculties (ListFacultiesRequest) returns (ListFacultiesResponse) {}
 }
 
@@ -87,7 +87,6 @@ message ListFacultiesRequest {
 
 message ListFacultiesResponse {
   repeated Faculty data = 1;
-  string next_page_token = 2;
 }
 
 // Groups

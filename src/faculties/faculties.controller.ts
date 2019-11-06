@@ -6,6 +6,7 @@ import { FacultiesService } from './faculties.service';
 import { FacultyOrder } from './interfaces/faculty-order.enum';
 import { GetFacultyRequest } from './interfaces/get-faculty-request.interface';
 import { ListFacultiesRequest } from './interfaces/list-faculties-request.interface';
+import { facultySerializer } from './serializers/faculty.serializer';
 
 @Controller()
 export class FacultiesController {
@@ -20,17 +21,17 @@ export class FacultiesController {
         message: 'Faculty is not found',
       });
     }
-    return faculty;
+    return facultySerializer.serialize([faculty]);
   }
 
   @GrpcMethod('FacultyService', 'ListFaculties')
   async findAll({ order_by, academy_id }: ListFacultiesRequest) {
     const faculties = await this.facultiesService.fetch(academy_id);
     if (order_by === FacultyOrder.Default) {
-      return { faculties };
+      return facultySerializer.serialize(faculties);
     }
-    return {
-      faculties: _.sortBy(faculties, [order_by.toLowerCase()]),
-    };
+    return facultySerializer.serialize(
+      _.sortBy(faculties, [order_by.toLowerCase()]),
+    );
   }
 }

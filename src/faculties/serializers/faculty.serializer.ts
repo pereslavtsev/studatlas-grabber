@@ -1,6 +1,6 @@
 import { Serializer } from 'jsonapi-serializer';
 
-export const divisionSerializer = new Serializer('divisions', {
+export const facultySerializer = new Serializer('faculties', {
   attributes: [
     'name',
     'abbreviation',
