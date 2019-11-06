@@ -92,8 +92,9 @@ message ListFacultiesResponse {
 // Groups
 
 service GroupService {
-  rpc GetGroup (GetGroupRequest) returns (Group) {}
+  rpc GetGroup (GetGroupRequest) returns (ListGroupsResponse) {}
   rpc ListGroups (ListGroupsRequest) returns (ListGroupsResponse) {}
+  rpc ListFacultiesGroups (ListGroupsRequest) returns (ListGroupsResponse) {}
 }
 
 message Group {
@@ -102,16 +103,15 @@ message Group {
   message Attributes {
     string name = 1;
     int32 year = 2;
-    string specialityId = 3;
-    string speciality = 4;
-    int32 countAll = 5;
-    int32 countCommon = 6;
-    int32 countTargeted = 7;
-    int32 countSpecial = 8;
-    string curricula = 9;
+    int32 countAll = 3;
+    int32 countCommon = 4;
+    int32 countTargeted = 5;
+    int32 countSpecial = 6;
+    string curricula = 7;
   }
   Attributes attributes = 3;
   message Relationships {
+    ListSpecialitiesResponse speciality = 1;
   }
   Relationships relationships = 4;
 }
@@ -130,19 +130,15 @@ message ListGroupsRequest {
     YEAR = 2;
   }
   OrderBy order_by = 3;
-  enum FilterBy {
-    ALL = 0;
-    FACULTY = 1;
-    SPECIALITY = 2;
-  }
-  FilterBy filter_by = 4;
-  int32 related_id = 5;
   //string page_token = 6;
 }
 
 message ListGroupsResponse {
-  repeated Group groups = 1;
-  string next_page_token = 2;
+  repeated Group data = 1;
+  message Included {
+    Speciality speciality = 1;
+  }
+  repeated Speciality included = 14;
 }
 
 // Divisions

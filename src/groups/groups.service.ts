@@ -20,7 +20,7 @@ export class GroupsService {
       },
     });
 
-    if (!!params.f) {
+    if (params && !!params.f) {
       const $ = cheerio.load(data);
       const pageTitle = $('.SubHead').text();
 

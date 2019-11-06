@@ -7,6 +7,7 @@ import { GroupsService } from './groups.service';
 import { GroupFilter } from './interfaces/group-filter.enum';
 import { GroupOrder } from './interfaces/group-order.enum';
 import { ListGroupsRequest } from './interfaces/list-groups-request.interface';
+import { groupSerializer } from './serializers/group.serializer';
 
 @Controller()
 export class GroupsController {
@@ -21,7 +22,7 @@ export class GroupsController {
         message: 'Group is not found',
       });
     }
-    return group;
+    return groupSerializer.serialize([group]);
   }
 
   @GrpcMethod('GroupService', 'ListGroups')
@@ -34,11 +35,17 @@ export class GroupsController {
     let groups;
     switch (filter_by) {
       case GroupFilter.Faculty: {
-        groups = await this.groupsService.fetchByFacultyId(related_id, academy_id);
+        groups = await this.groupsService.fetchByFacultyId(
+          related_id,
+          academy_id,
+        );
         break;
       }
       case GroupFilter.Speciality: {
-        groups = await this.groupsService.fetchBySpecialityId(related_id, academy_id);
+        groups = await this.groupsService.fetchBySpecialityId(
+          related_id,
+          academy_id,
+        );
         break;
       }
       case GroupFilter.All:
@@ -48,10 +55,10 @@ export class GroupsController {
     }
 
     if (order_by === GroupOrder.Default) {
-      return { groups };
+      return groupSerializer.serialize(groups);
     }
-    return {
-      groups: _.sortBy(groups, [order_by.toLowerCase()]),
-    };
+    return groupSerializer.serialize(
+      _.sortBy(groups, [order_by.toLowerCase()]),
+    );
   }
 }
