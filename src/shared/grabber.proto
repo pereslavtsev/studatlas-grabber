@@ -3,18 +3,25 @@ syntax = "proto3";
 package grabber;
 
 service AcademyService {
-  rpc GetAcademy (GetAcademyRequest) returns (Academy) {}
+  rpc GetAcademy (GetAcademyRequest) returns (ListAcademiesResponse) {}
   rpc ListAcademies (ListAcademiesRequest) returns (ListAcademiesResponse) {}
 }
 
 message Academy {
-  string id = 1;
-  string name = 2;
-  string abbreviation = 3;
-  string alias = 4;
-  string website = 5;
-  string endpoint = 6;
-  string version = 7;
+  string type = 1;
+  string id = 2;
+  message Attributes {
+    string name = 1;
+    string abbreviation = 2;
+    string alias = 3;
+    string website = 4;
+    string endpoint = 5;
+    string version = 6;
+  }
+  Attributes attributes = 3;
+  message Relationships {
+  }
+  Relationships relationships = 4;
 }
 
 message GetAcademyRequest {
@@ -34,7 +41,7 @@ message ListAcademiesRequest {
 }
 
 message ListAcademiesResponse {
-  repeated Academy academies = 1;
+  repeated Academy data = 1;
   string next_page_token = 2;
 }
 
@@ -49,16 +56,16 @@ message Faculty {
   string type = 1;
   string id = 2;
   message Attributes {
-    string name = 3;
-    string abbreviation = 4;
-    string head = 5;
-    string phone = 6;
-    string room = 7;
+    string name = 1;
+    string abbreviation = 2;
+    string head = 3;
+    string phone = 4;
+    string room = 5;
   }
-  Attributes attributes = 8;
+  Attributes attributes = 3;
   message Relationships {
   }
-  Relationships relationships = 9;
+  Relationships relationships = 4;
 }
 
 message GetFacultyRequest {
@@ -91,16 +98,23 @@ service GroupService {
 }
 
 message Group {
-  string id = 1;
-  string name = 2;
-  int32 year = 3;
-  string specialityId = 4;
-  string speciality = 5;
-  int32 countAll = 6;
-  int32 countCommon = 7;
-  int32 countTargeted = 8;
-  int32 countSpecial = 9;
-  string curricula = 10;
+  string type = 1;
+  string id = 2;
+  message Attributes {
+    string name = 1;
+    int32 year = 2;
+    string specialityId = 3;
+    string speciality = 4;
+    int32 countAll = 5;
+    int32 countCommon = 6;
+    int32 countTargeted = 7;
+    int32 countSpecial = 8;
+    string curricula = 9;
+  }
+  Attributes attributes = 3;
+  message Relationships {
+  }
+  Relationships relationships = 4;
 }
 
 message GetGroupRequest {
@@ -140,12 +154,19 @@ service DivisionService {
 }
 
 message Division {
-  string id = 1;
-  string name = 2;
-  string abbreviation = 3;
-  string head = 4;
-  string phone = 5;
-  string room = 6;
+  string type = 1;
+  string id = 2;
+  message Attributes {
+    string name = 2;
+    string abbreviation = 3;
+    string head = 4;
+    string phone = 5;
+    string room = 6;
+  }
+  Attributes attributes = 3;
+  message Relationships {
+  }
+  Relationships relationships = 4;
 }
 
 message GetDivisionRequest {
@@ -166,14 +187,14 @@ message ListDivisionsRequest {
 }
 
 message ListDivisionsResponse {
-  repeated Division divisions = 1;
+  repeated Division data = 1;
   string next_page_token = 2;
 }
 
 // Specialities
 
 service SpecialityService {
-  rpc GetSpeciality (GetSpecialityRequest) returns (Speciality) {}
+  rpc GetSpeciality (GetSpecialityRequest) returns (ListSpecialitiesResponse) {}
   rpc ListSpecialities (ListSpecialitiesRequest) returns (ListSpecialitiesResponse) {}
   rpc ListFacultySpecialities (ListFacultySpecialitiesRequest) returns (ListSpecialitiesResponse) {}
 }
@@ -182,20 +203,17 @@ message Speciality {
   string type = 1; // specialities
   string id = 2;
   message Attributes {
-    string shortName = 3;
-    string name = 4;
-    string facultyId = 5;
-    string faculty = 6;
-    string divisionId = 7;
-    string division = 8;
-    string code = 9;
-    string qualification = 10;
+    string shortName = 1;
+    string name = 2;
+    string code = 7;
+    string qualification = 8;
   }
-  Attributes attributes = 11;
+  Attributes attributes = 3;
   message Relationships {
-    ListFacultiesResponse faculty = 12;
+    ListDivisionsResponse division = 1;
+    ListFacultiesResponse faculty = 2;
   }
-  Relationships relationships = 13;
+  Relationships relationships = 4;
 }
 
 message GetSpecialityRequest {
@@ -231,7 +249,8 @@ message ListFacultySpecialitiesRequest {
 message ListSpecialitiesResponse {
   repeated Speciality data = 1;
   message Included {
-    Faculty booleanValue = 1;
+    Division division = 1;
+    Faculty faculty = 2;
   }
   repeated Faculty included = 14;
 }
