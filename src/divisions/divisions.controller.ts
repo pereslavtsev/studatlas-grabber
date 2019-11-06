@@ -6,6 +6,7 @@ import { DivisionsService } from './divisions.service';
 import { DivisionOrder } from './interfaces/division-order.enum';
 import { GetDivisionRequest } from './interfaces/get-division-request.interface';
 import { ListDivisionsRequest } from './interfaces/list-divisions-request.interface';
+import { divisionSerializer } from './serializers/division.serializer';
 
 @Controller()
 export class DivisionsController {
@@ -20,17 +21,17 @@ export class DivisionsController {
         message: 'Division is not found',
       });
     }
-    return division;
+    return divisionSerializer.serialize([division]);
   }
 
   @GrpcMethod('DivisionService', 'ListDivisions')
   async findAll({ order_by, academy_id }: ListDivisionsRequest) {
     const divisions = await this.divisionsService.fetch(academy_id);
     if (order_by === DivisionOrder.Default) {
-      return { divisions };
+      return divisionSerializer.serialize(divisions);
     }
-    return {
-      divisions: _.sortBy(divisions, [order_by.toLowerCase()]),
-    };
+    return divisionSerializer.serialize(
+      _.sortBy(divisions, [order_by.toLowerCase()]),
+    );
   }
 }
