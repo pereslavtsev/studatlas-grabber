@@ -4,7 +4,7 @@ import { join } from 'path';
 export const grpcClientOptions: ClientOptions = {
   transport: Transport.GRPC,
   options: {
-    url: `localhost:${process.env.PORT || 50051}`,
+    url: `0.0.0.0:${process.env.PORT || 5000}`,
     package: 'grabber',
     protoPath: join(__dirname, '../grabber.proto'),
   },

@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts-buster
 
 ENV NPM_CONFIG_LOGLEVEL warn
 
@@ -14,3 +14,5 @@ COPY . /usr/src/app/
 RUN yarn build
 
 ENTRYPOINT ["yarn", "start:prod"]
+
+EXPOSE 5000
