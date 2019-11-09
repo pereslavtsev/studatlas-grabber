@@ -1,0 +1,29 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@1.1
+
+jobs:
+  build:
+    working_directory: ~/grabber
+    docker:
+      - image: circleci/node:12.5.0
+        environment:
+          MONGODB_URI: mongodb://test:password@localhost/studatlas
+      - image: circleci/mongo
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: test
+          MONGO_INITDB_ROOT_PASSWORD: password
+          MONGO_INITDB_DATABASE: studatlas
+    steps:
+      - checkout
+      - run:
+          name: Waiting for MongoDB to be ready
+          command: ./grabber/.circleci/wait-mongo.sh
+      - node/with-cache:
+          steps:
+            - run: yarn install
+      - run: yarn test
+      - run:
+          name: lint
+          command: yarn lint
