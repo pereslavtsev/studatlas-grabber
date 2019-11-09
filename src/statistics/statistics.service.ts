@@ -16,7 +16,12 @@ export class StatisticsService {
     return dataGrid.extract(STATISTICS_SCHEMA);
   }
 
-  fetchAll(year: string, semester: number, mode: string, academyId: string) {
+  protected fetchAll(
+    year: string,
+    semester: number,
+    mode: string,
+    academyId: string,
+  ) {
     let statMode;
     switch (mode) {
       case 'faculties':
@@ -28,38 +33,16 @@ export class StatisticsService {
     }
     return this.fetch(academyId, {
       mode: statMode,
-      year,
-      sem: semester,
+      // year,
+      // sem: semester,
     });
   }
 
-  async fetchByDivisionId(
-    id: number,
-    year: string,
-    semester: number,
-    academyId: string,
-  ) {
-    const statistics = await this.fetchAll(
-      year,
-      semester,
-      'divisions',
-      academyId,
-    );
-    return statistics.find(item => item.divisionId === Number(id));
+  async fetchByDivisions(year: string, semester: number, academyId: string) {
+    return await this.fetchAll(year, semester, 'divisions', academyId);
   }
 
-  async fetchByFacultyId(
-    id: number,
-    year: string,
-    semester: number,
-    academyId: string,
-  ) {
-    const statistics = await this.fetchAll(
-      year,
-      semester,
-      'faculties',
-      academyId,
-    );
-    return statistics.find(item => item.facultyId === Number(id));
+  async fetchByFaculties(year: string, semester: number, academyId: string) {
+    return await this.fetchAll(year, semester, 'faculties', academyId);
   }
 }

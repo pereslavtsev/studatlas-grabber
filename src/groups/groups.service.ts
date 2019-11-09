@@ -11,7 +11,7 @@ import { GROUP_SCHEMA } from './mocks/group-schema.mock';
 export class GroupsService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  async fetch(academyId: string, params?: any) {
+  private async fetch(academyId: string, params?: any) {
     const client = await this.grabberService.create(academyId);
     const { data } = await client.get(GrabberService.DIRECTORY_PATH, {
       params: {

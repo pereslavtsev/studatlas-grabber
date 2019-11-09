@@ -39,7 +39,7 @@ export class GrabberService {
       return response;
     }, error => {
       // tslint:disable-next-line:no-console
-      // console.log(error);
+      console.log(error);
       throw new RpcException({
         status: grpc.status.UNKNOWN,
         message: 'Unknown error on a remote server',

@@ -57,6 +57,10 @@ message Faculty {
   Relationships relationships = 4;
 }
 
+message FacultyRelationship {
+  Faculty data = 1;
+}
+
 message GetFacultyRequest {
   string id = 1;
   string academy_id = 2;
@@ -95,9 +99,6 @@ message Group {
   }
   Attributes attributes = 3;
   message Relationships {
-    message SpecialityRelationship {
-      Speciality data = 1;
-    }
     SpecialityRelationship speciality = 1;
   }
   Relationships relationships = 4;
@@ -155,6 +156,10 @@ message Division {
   Relationships relationships = 4;
 }
 
+message DivisionRelationship {
+  Division data = 1;
+}
+
 message GetDivisionRequest {
   string id = 1;
   string academy_id = 2;
@@ -190,16 +195,14 @@ message Speciality {
   }
   Attributes attributes = 3;
   message Relationships {
-    message DivisionRelationship {
-      Division data = 1;
-    }
     DivisionRelationship division = 1;
-    message FacultyRelationship {
-      Division data = 1;
-    }
-    DivisionRelationship faculty = 2;
+    FacultyRelationship faculty = 2;
   }
   Relationships relationships = 4;
+}
+
+message SpecialityRelationship {
+  Speciality data = 1;
 }
 
 message GetSpecialityRequest {
@@ -227,4 +230,44 @@ message ListSpecialitiesResponse {
     Faculty faculty = 2;
   }
   repeated Faculty included = 14;
+}
+
+// Statistics
+
+service StatisticsService {
+  rpc ListDivisionsStatistics (ListStatisticsRequest) returns (ListStatisticsResponse) {}
+  rpc ListFacultiesStatistics (ListStatisticsRequest) returns (ListStatisticsResponse) {}
+}
+
+message Statistics {
+  string type = 1; // statistics
+  string id = 2;
+  message Attributes {
+    int32 all = 1;
+    int32 noCheckpoints = 2;
+    int32 noRatings = 3 ;
+    int32 notClosed = 4;
+    int32 blank = 5;
+  }
+  Attributes attributes = 3;
+  message Relationships {
+    DivisionRelationship division = 1;
+    FacultyRelationship faculty = 2;
+  }
+  Relationships relationships = 4;
+}
+
+message ListStatisticsRequest {
+  string academy_id = 1;
+  string year = 2;
+  int32 semester = 3;
+}
+
+message ListStatisticsResponse {
+  repeated Statistics data = 1;
+  message Included {
+    Division division = 1;
+    Faculty faculty = 2;
+  }
+  repeated Faculty included = 14; // TODO: !
 }
