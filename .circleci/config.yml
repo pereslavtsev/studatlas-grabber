@@ -19,7 +19,7 @@ jobs:
       - checkout
       - run:
           name: Waiting for MongoDB to be ready
-          command: sh .circleci/wait-mongo.sh
+          command: sh .circleci/wait-for-mongo.sh
       - node/with-cache:
           steps:
             - run: yarn install

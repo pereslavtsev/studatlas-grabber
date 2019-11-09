@@ -2,7 +2,6 @@ import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { AcademiesService } from './academies.service';
 import { GetAcademyRequest } from './interfaces/get-academy-request.interface';
-import { ListAcademiesRequest } from './interfaces/list-academies-request.interface';
 import { academySerializer } from './serializers/academy.serializer';
 
 @Controller()
@@ -20,8 +19,8 @@ export class AcademiesController {
   }
 
   @GrpcMethod('AcademyService', 'ListAcademies')
-  async findAll({ order_by }: ListAcademiesRequest) {
-    const academies = await this.academiesService.findAll(order_by);
+  async findAll() {
+    const academies = await this.academiesService.findAll();
     return academySerializer.serialize(academies);
   }
 }

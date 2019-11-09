@@ -38,9 +38,10 @@ export class GroupsService {
             break;
           }
           case DictionaryFilter.Speciality: {
+            console.log(pageTitle)
             // Проверяет, есть ли такая специальность
             const isSpecialityExists = !!pageTitle.match(
-              'Специальности факультета \\D+',
+              'Группы специальности \\S+',
             );
             if (!isSpecialityExists) {
               throw new RpcException({

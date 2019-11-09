@@ -19,8 +19,7 @@ message Academy {
     string version = 6;
   }
   Attributes attributes = 3;
-  message Relationships {
-  }
+  message Relationships {}
   Relationships relationships = 4;
 }
 
@@ -28,17 +27,7 @@ message GetAcademyRequest {
   string id = 1;
 }
 
-message ListAcademiesRequest {
-  //string parent = 1;
-  enum OrderBy {
-    DEFAULT = 0;
-    NAME = 1;
-    ABBREVIATION = 2;
-    ALIAS = 3;
-  }
-  OrderBy order_by = 2;
-  //string page_token = 3;
-}
+message ListAcademiesRequest {}
 
 message ListAcademiesResponse {
   repeated Academy data = 1;
@@ -76,12 +65,6 @@ message GetFacultyRequest {
 message ListFacultiesRequest {
   string academy_id = 1;
   //string parent = 2;
-  enum OrderBy {
-    DEFAULT = 0;
-    NAME = 1;
-    ABBREVIATION = 2;
-  }
-  OrderBy order_by = 3;
   //string page_token = 4;
 }
 
@@ -94,7 +77,8 @@ message ListFacultiesResponse {
 service GroupService {
   rpc GetGroup (GetGroupRequest) returns (ListGroupsResponse) {}
   rpc ListGroups (ListGroupsRequest) returns (ListGroupsResponse) {}
-  rpc ListFacultiesGroups (ListGroupsRequest) returns (ListGroupsResponse) {}
+  rpc ListFacultyGroups (ListFacultyGroupsRequest) returns (ListGroupsResponse) {}
+  rpc ListSpecialityGroups (ListSpecialityGroupsRequest) returns (ListGroupsResponse) {}
 }
 
 message Group {
@@ -111,7 +95,10 @@ message Group {
   }
   Attributes attributes = 3;
   message Relationships {
-    ListSpecialitiesResponse speciality = 1;
+    message SpecialityRelationship {
+      Speciality data = 1;
+    }
+    SpecialityRelationship speciality = 1;
   }
   Relationships relationships = 4;
 }
@@ -124,13 +111,17 @@ message GetGroupRequest {
 message ListGroupsRequest {
   string academy_id = 1;
   //string parent = 2;
-  enum OrderBy {
-    DEFAULT = 0;
-    NAME = 1;
-    YEAR = 2;
-  }
-  OrderBy order_by = 3;
   //string page_token = 6;
+}
+
+message ListFacultyGroupsRequest {
+  string academy_id = 1;
+  int32 faculty_id = 2;
+}
+
+message ListSpecialityGroupsRequest {
+  string academy_id = 1;
+  int32 speciality_id = 2;
 }
 
 message ListGroupsResponse {
@@ -172,12 +163,6 @@ message GetDivisionRequest {
 message ListDivisionsRequest {
   string academy_id = 1;
   //string parent = 2;
-  enum OrderBy {
-    DEFAULT = 0;
-    NAME = 1;
-    ABBREVIATION = 2;
-  }
-  OrderBy order_by = 3;
   //string page_token = 4;
 }
 
@@ -205,8 +190,14 @@ message Speciality {
   }
   Attributes attributes = 3;
   message Relationships {
-    ListDivisionsResponse division = 1;
-    ListFacultiesResponse faculty = 2;
+    message DivisionRelationship {
+      Division data = 1;
+    }
+    DivisionRelationship division = 1;
+    message FacultyRelationship {
+      Division data = 1;
+    }
+    DivisionRelationship faculty = 2;
   }
   Relationships relationships = 4;
 }
@@ -219,12 +210,6 @@ message GetSpecialityRequest {
 message ListSpecialitiesRequest {
   string academy_id = 1;
   //string parent = 2;
-  enum OrderBy {
-    DEFAULT = 0;
-    NAME = 1;
-    ABBREVIATION = 2;
-  }
-  OrderBy order_by = 3;
   //string page_token = 4;
 }
 
@@ -232,12 +217,6 @@ message ListFacultySpecialitiesRequest {
   string academy_id = 1;
   string faculty_id = 2;
   //string parent = 3;
-  enum OrderBy {
-    DEFAULT = 0;
-    NAME = 1;
-    ABBREVIATION = 2;
-  }
-  OrderBy order_by = 4;
   //string page_token = 5;
 }
 

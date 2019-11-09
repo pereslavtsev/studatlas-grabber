@@ -1,11 +1,9 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import * as grpc from 'grpc';
-import * as _ from 'lodash';
-import { GetFacultyRequest } from '../faculties/interfaces/get-faculty-request.interface';
+import { GetSpecialityRequest } from './interfaces/requests/get-speciality-request.interface';
 import { ListFacultySpecialitiesRequest } from './interfaces/requests/list-faculty-specialities-request.interface';
 import { ListSpecialitiesRequest } from './interfaces/requests/list-specialities-request.interface';
-import { SpecialitiesOrder } from './interfaces/specialities-order.enum';
 import { specialitySerializer } from './serializers/speciality.serializer';
 import { SpecialitiesService } from './specialities.service';
 
@@ -14,7 +12,7 @@ export class SpecialitiesController {
   constructor(private readonly specialitiesService: SpecialitiesService) {}
 
   @GrpcMethod('SpecialityService', 'GetSpeciality')
-  async findOne({ id, academy_id }: GetFacultyRequest) {
+  async findOne({ id, academy_id }: GetSpecialityRequest) {
     const speciality = await this.specialitiesService.fetchById(id, academy_id);
     if (!speciality) {
       throw new RpcException({
@@ -26,33 +24,20 @@ export class SpecialitiesController {
   }
 
   @GrpcMethod('SpecialityService', 'ListSpecialities')
-  async findAll({ order_by, academy_id }: ListSpecialitiesRequest) {
-    const specialities = await this.specialitiesService.fetchAll(academy_id);
-    if (order_by === SpecialitiesOrder.Default) {
-      return specialitySerializer.serialize(specialities);
-    }
-
-    return specialitySerializer.serialize(
-      _.sortBy(specialities, [order_by.toLowerCase()]),
-    );
+  async findAll({ academyId }: ListSpecialitiesRequest) {
+    const specialities = await this.specialitiesService.fetchAll(academyId);
+    return specialitySerializer.serialize(specialities);
   }
 
   @GrpcMethod('SpecialityService', 'ListFacultySpecialities')
   async findByFacultyId({
-    order_by,
-    faculty_id,
-    academy_id,
+    facultyId,
+    academyId,
   }: ListFacultySpecialitiesRequest) {
     const specialities = await this.specialitiesService.fetchByFacultyId(
-      faculty_id,
-      academy_id,
+      facultyId,
+      academyId,
     );
-    if (order_by === SpecialitiesOrder.Default) {
-      return specialitySerializer.serialize(specialities);
-    }
-
-    return specialitySerializer.serialize(
-      _.sortBy(specialities, [order_by.toLowerCase()]),
-    );
+    return specialitySerializer.serialize(specialities);
   }
 }

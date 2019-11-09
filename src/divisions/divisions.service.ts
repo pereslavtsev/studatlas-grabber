@@ -8,7 +8,7 @@ import { DIVISION_SCHEMA } from './mocks/division-schema.mock';
 export class DivisionsService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  async fetch(academyId: string, params?: any): Promise<any[]> {
+  private async fetch(academyId: string, params?: any): Promise<any[]> {
     const client = await this.grabberService.create(academyId);
     const { data } = await client.get(GrabberService.DIRECTORY_PATH, {
       params: {

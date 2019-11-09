@@ -1,4 +1,4 @@
 export interface GetSpecialityRequest {
-  id: string;
+  id: number;
   academy_id: string;
 }

@@ -9,7 +9,7 @@ export class FacultiesService {
 
   static MODE = 'facultet';
 
-  async fetch(academyId: string, params?: any) {
+  private async fetch(academyId: string, params?: any) {
     const client = await this.grabberService.create(academyId);
     const { data } = await client.get(GrabberService.DIRECTORY_PATH, {
       params: {
@@ -27,5 +27,9 @@ export class FacultiesService {
   async fetchById(id: number, academyId: string) {
     const faculties = await this.fetch(academyId, { id });
     return faculties.pop();
+  }
+
+  fetchAll(academyId: string) {
+    return this.fetch(academyId);
   }
 }

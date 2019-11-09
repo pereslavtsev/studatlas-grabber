@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as grpc from 'grpc';
 import * as _ from 'lodash';
 import { Model } from 'mongoose';
-import { AcademyOrder } from './interfaces/academy-order.enum';
 import { Academy } from './interfaces/academy.interface';
 
 @Injectable()
@@ -24,15 +23,9 @@ export class AcademiesService {
   ];
 
   async findById(id: string): Promise<Academy> {
+    let academy;
     try {
-      const academy = await this.academyModel.findById(id).exec();
-      if (!academy) {
-        throw new RpcException({
-          status: grpc.status.NOT_FOUND,
-          message: 'Academy is not found',
-        });
-      }
-      return _.pick(academy, this.academyFields) as Academy;
+      academy = await this.academyModel.findById(id).exec();
     } catch (e) {
       switch (e.kind) {
         case 'ObjectId': {
@@ -48,18 +41,17 @@ export class AcademiesService {
         }
       }
     }
+    if (!academy) {
+      throw new RpcException({
+        status: grpc.status.NOT_FOUND,
+        message: 'Academy is not found',
+      });
+    }
+    return _.pick(academy, this.academyFields) as Academy;
   }
 
-  async findAll(orderBy: AcademyOrder): Promise<Academy[]> {
-    const academies = await this.academyModel
-      .find(
-        {},
-        null,
-        orderBy !== AcademyOrder.Default
-          ? { sort: { [orderBy.toLowerCase()]: 1 } }
-          : {},
-      )
-      .exec();
+  async findAll(): Promise<Academy[]> {
+    const academies = await this.academyModel.find().exec();
     return academies.map(
       academy => _.pick(academy, this.academyFields) as Academy,
     );
