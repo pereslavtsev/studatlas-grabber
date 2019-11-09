@@ -6,6 +6,6 @@ export const grpcClientOptions: ClientOptions = {
   options: {
     url: `0.0.0.0:${process.env.PORT || 5000}`,
     package: 'grabber',
-    protoPath: join(__dirname, '../grabber.proto'),
+    protoPath: join(__dirname, '../protos/grabber.proto'),
   },
 };

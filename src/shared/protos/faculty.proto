@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "./entity.proto";
+
+package grabber;
+
+service FacultyService {
+    rpc GetFaculty (GetEntityRequest) returns (ListFacultiesResponse) {}
+    rpc ListFaculties (ListFacultiesRequest) returns (ListFacultiesResponse) {}
+}
+
+message Faculty {
+    string type = 1;
+    string id = 2;
+    message Attributes {
+        string name = 1;
+        string abbreviation = 2;
+        string head = 3;
+        string phone = 4;
+        string room = 5;
+    }
+    Attributes attributes = 3;
+    message Relationships {
+    }
+    Relationships relationships = 4;
+}
+
+message FacultyRelationship {
+    Faculty data = 1;
+}
+
+message ListFacultiesRequest {
+    string academy_id = 1;
+    //string parent = 2;
+    //string page_token = 4;
+}
+
+message ListFacultiesResponse {
+    repeated Faculty data = 1;
+}

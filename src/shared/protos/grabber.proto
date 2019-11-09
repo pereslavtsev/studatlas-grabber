@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "./academy.proto";
+import "./division.proto";
+import "./faculty.proto";
+import "./group.proto";
+import "./speciality.proto";
+import "./statistics.proto";
+
+package grabber;
