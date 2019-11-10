@@ -8,6 +8,7 @@ export const academySerializer = new Serializer('academies', {
     'website',
     'endpoint',
     'version',
+    'disabledSources',
   ],
   keyForAttribute: 'camelCase',
 });

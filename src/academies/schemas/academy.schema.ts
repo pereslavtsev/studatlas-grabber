@@ -10,4 +10,5 @@ export const AcademySchema = new mongoose.Schema({
     type: String,
     default: 'modern',
   },
+  disabledSources: [String],
 });

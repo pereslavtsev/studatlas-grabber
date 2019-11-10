@@ -17,6 +17,7 @@ message Academy {
         string website = 4;
         string endpoint = 5;
         string version = 6;
+        repeated string disabledSources = 7;
     }
     Attributes attributes = 3;
     message Relationships {}
