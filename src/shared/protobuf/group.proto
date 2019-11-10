@@ -31,6 +31,10 @@ message Group {
     Relationships relationships = 4;
 }
 
+message GroupRelationship {
+    Group data = 1;
+}
+
 message ListGroupsRequest {
     string academy_id = 1;
     //string parent = 2;
