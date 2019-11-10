@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import axios, { AxiosRequestConfig } from 'axios';
 import * as grpc from 'grpc';
-import { AcademiesService } from '../academies/academies.service';
-import { transformRequest } from './helpers/transform-request.helper';
-import { transformResponse } from './helpers/transform-response.helper';
+import { AcademiesService } from '../../academies/academies.service';
+import { transformRequest } from '../helpers/transform-request.helper';
+import { transformResponse } from '../helpers/transform-response.helper';
 
 @Injectable()
 export class GrabberService {

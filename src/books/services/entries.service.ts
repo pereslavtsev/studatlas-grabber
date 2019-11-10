@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataGrid } from '../../grabber/classes/data-grid.class';
-import { GrabberService } from '../../grabber/grabber.service';
+import { GrabberService } from '../../grabber/services/grabber.service';
 import { Entry } from '../interfaces/entry.interface';
 import { ENTRY_SCHEMA } from '../mocks/entry-schema.mock';
 
