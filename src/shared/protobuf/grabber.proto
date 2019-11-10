@@ -5,6 +5,7 @@ import "./book.proto";
 import "./division.proto";
 import "./faculty.proto";
 import "./group.proto";
+import "./report.proto";
 import "./speciality.proto";
 import "./statistics.proto";
 

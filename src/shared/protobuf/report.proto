@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+import "./group.proto";
+
+package grabber;
+
+service ReportService {
+    rpc ListFacultyReports (ListFacultyReportsRequest) returns (ListReportsResponse) {}
+}
+
+message Report {
+    string type = 1; // reports
+    string id = 2;
+    message Attributes {
+    }
+    Attributes attributes = 3;
+    message Relationships {
+        GroupRelationship group = 1;
+    }
+    Relationships relationships = 4;
+}
+
+message ListFacultyReportsRequest {
+    string academy_id = 1;
+    int32 faculty_id = 2;
+    string year = 3;
+}
+
+message ListReportsResponse {
+    repeated Report data = 1;
+    message Included {
+        Group group = 1;
+    }
+    repeated Group included = 14;
+}

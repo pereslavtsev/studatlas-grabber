@@ -1,3 +1,4 @@
-export const transformRequest = req => {
-  return req;
+export const transformRequest = (data, headers) => {
+  //console.log(data, headers);
+  return JSON.stringify(data);
 };

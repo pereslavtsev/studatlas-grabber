@@ -3,8 +3,7 @@ import { RpcException } from '@nestjs/microservices';
 import axios, { AxiosRequestConfig } from 'axios';
 import * as grpc from 'grpc';
 import { AcademiesService } from '../../academies/academies.service';
-import { transformRequest } from '../helpers/transform-request.helper';
-import { transformResponse } from '../helpers/transform-response.helper';
+import { requestInterceptor } from '../interceptors/request.interceptor';
 
 @Injectable()
 export class GrabberService {
@@ -17,34 +16,25 @@ export class GrabberService {
 
     const clientConfig: AxiosRequestConfig = {
       baseURL: academy.endpoint,
-      responseType: 'arraybuffer',
-      transformRequest,
-      transformResponse,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     };
     const client = axios.create(clientConfig);
-    client.interceptors.request.use(
-      config => {
-        /** In dev, intercepts request and logs it into console for dev */
-        // tslint:disable-next-line:no-console
-        // console.info(config);
-        return config;
+    client.interceptors.request.use(...requestInterceptor);
+    client.interceptors.response.use(
+      response => {
+        return response;
       },
       error => {
         // tslint:disable-next-line:no-console
-        // console.error(error);
-        return Promise.reject(error);
+        console.log(error);
+        throw new RpcException({
+          status: grpc.status.UNKNOWN,
+          message: 'Unknown error on a remote server',
+        });
       },
     );
-    client.interceptors.response.use(response => {
-      return response;
-    }, error => {
-      // tslint:disable-next-line:no-console
-      console.log(error);
-      throw new RpcException({
-        status: grpc.status.UNKNOWN,
-        message: 'Unknown error on a remote server',
-      });
-    });
     return client;
   }
 }

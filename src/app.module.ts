@@ -10,6 +10,7 @@ import { MongooseConfigService } from './shared/services/mongoose-config.service
 import { SharedModule } from './shared/shared.module';
 import { SpecialitiesModule } from './specialities/specialities.module';
 import { StatisticsModule } from './statistics/statistics.module';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { StatisticsModule } from './statistics/statistics.module';
     SpecialitiesModule,
     StatisticsModule,
     BooksModule,
+    ReportsModule,
   ],
   controllers: [],
   providers: [],
