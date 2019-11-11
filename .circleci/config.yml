@@ -30,7 +30,6 @@ jobs:
 
 workflows:
   build-and-publish:
-    executor: docker/docker
     jobs:
       - docker/publish:
           cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
