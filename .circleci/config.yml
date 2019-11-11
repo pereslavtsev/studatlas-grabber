@@ -27,18 +27,17 @@ jobs:
 #      - run:
 #          name: lint
 #          command: yarn lint
+
+workflows:
+  commit:
+    jobs:
+      - test
   build-and-publish:
     executor: docker/docker
-    steps:
+    jobs:
       - docker/dockerlint:
           treat-warnings-as-errors: true
       - docker/publish:
           cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
           tag: latest
-
-workflows:
-  commit:
-    jobs:
-      - test
-      - build-and-publish
