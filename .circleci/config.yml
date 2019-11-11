@@ -27,7 +27,7 @@ jobs:
 #      - run:
 #          name: lint
 #          command: yarn lint
-  build-and-publish-docker-image:
+  build-and-publish:
     executor: docker/docker
     steps:
       - docker/dockerlint:
@@ -36,3 +36,9 @@ jobs:
           cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
           tag: latest
+
+workflows:
+  commit:
+    jobs:
+      - test
+      - build-and-publish
