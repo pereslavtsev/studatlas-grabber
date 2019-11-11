@@ -5,12 +5,6 @@ orbs:
   docker: circleci/docker@0.5.17
 
 jobs:
-  lint:
-    executor: docker/machine
-    steps:
-      - checkout
-      - docker/dockerlint:
-          treat-warnings-as-errors: true
   test:
     docker:
       - image: circleci/node:12.5.0
@@ -38,9 +32,6 @@ workflows:
   commit:
     jobs:
       - test
-  lint-dockerfile:
-    jobs:
-      - lint
   build-and-publish:
     executor: docker/docker
     jobs:
