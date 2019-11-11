@@ -2,10 +2,10 @@ version: 2.1
 
 orbs:
   node: circleci/node@1.1
+  docker: circleci/docker@0.5.17
 
 jobs:
-  build:
-    working_directory: ~/grabber
+  test:
     docker:
       - image: circleci/node:12.5.0
         environment:
@@ -24,6 +24,14 @@ jobs:
           steps:
             - run: yarn install
       #- run: yarn test
-      - run:
-          name: lint
-          command: yarn lint
+#      - run:
+#          name: lint
+#          command: yarn lint
+  build-and-publish-docker-image:
+    jobs:
+      - docker/dockerlint:
+          treat-warnings-as-errors: true
+      - docker/publish:
+          cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          tag: latest
