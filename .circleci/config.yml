@@ -5,6 +5,7 @@ orbs:
   docker: circleci/docker@0.5.17
 
 jobs:
+
   test:
     docker:
       - image: circleci/node:12.5.0
@@ -23,15 +24,20 @@ jobs:
       - node/with-cache:
           steps:
             - run: yarn install
-      #- run: yarn test
-#      - run:
-#          name: lint
-#          command: yarn lint
 
-workflows:
-  build-and-publish:
-    jobs:
+  build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - docker/check
       - docker/publish:
           cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
           tag: latest
+
+workflows:
+  build-and-publish:
+    jobs:
+      - test
+      - build-and-push
+
