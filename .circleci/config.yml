@@ -29,11 +29,17 @@ jobs:
     executor: docker/docker
     steps:
       - setup_remote_docker
+      - checkout
       - docker/check
-      - docker/publish:
+      - docker/build:
           cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-          tag: latest
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+      - run:
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
 
 workflows:
   build-and-publish:
