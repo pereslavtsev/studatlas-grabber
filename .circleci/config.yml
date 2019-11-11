@@ -56,13 +56,13 @@ workflows:
   build-and-test:
     jobs:
       - test
-      - lint-dockerfile
-        requires:
-          - test
-      - build-and-push
-        requires:
-          - lint-dockerfile
-        filters:
-          branches:
-            only: master
+      - lint-dockerfile:
+          requires:
+            - test
+      - build-and-push:
+          requires:
+            - lint-dockerfile
+          filters:
+            branches:
+              only: master
 
