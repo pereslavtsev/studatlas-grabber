@@ -29,9 +29,6 @@ jobs:
 #          command: yarn lint
 
 workflows:
-  commit:
-    jobs:
-      - test
   build-and-publish:
     executor: docker/docker
     jobs:
