@@ -3,15 +3,14 @@ version: 2.1
 orbs:
   node: circleci/node@1.1
   docker: circleci/docker@0.5.17
-  jobs:
-    lint:
-      executor: docker/machine
-      steps:
-        - checkout
-        - docker/dockerlint:
-            treat-warnings-as-errors: true
 
 jobs:
+  lint:
+    executor: docker/machine
+    steps:
+      - checkout
+      - docker/dockerlint:
+          treat-warnings-as-errors: true
   test:
     docker:
       - image: circleci/node:12.5.0
