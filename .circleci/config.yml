@@ -57,8 +57,8 @@ workflows:
     jobs:
       - test
       - lint-dockerfile
-        requires:
-          - test
+          requires:
+            - test
       - build-and-push
           requires:
             - lint-dockerfile
