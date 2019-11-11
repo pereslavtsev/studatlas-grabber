@@ -29,7 +29,7 @@ jobs:
 #          command: yarn lint
   build-and-publish-docker-image:
     executor: docker/docker
-    jobs:
+    steps:
       - docker/dockerlint:
           treat-warnings-as-errors: true
       - docker/publish:
