@@ -25,6 +25,15 @@ jobs:
           steps:
             - run: yarn install
 
+# linting a dockerfile
+  lint-dockerfile:
+    executor: docker/machine
+    steps:
+      - checkout
+      - docker/dockerlint:
+          treat-warnings-as-errors: true
+
+# docker push
   build-and-push:
     executor: docker/docker
     steps:
@@ -37,13 +46,23 @@ jobs:
       - docker/push:
           digest-path: /tmp/digest.txt
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          tag: latest
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
 
+# workflows
 workflows:
-  build-and-publish:
+  build-and-test:
     jobs:
       - test
+      - lint-dockerfile
+        requires:
+          - test
       - build-and-push
+          requires:
+            - lint-dockerfile
+          filters:
+            branches:
+              only: master
 
