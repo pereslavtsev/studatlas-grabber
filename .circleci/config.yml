@@ -3,6 +3,13 @@ version: 2.1
 orbs:
   node: circleci/node@1.1
   docker: circleci/docker@0.5.17
+  jobs:
+    lint:
+      executor: docker/machine
+      steps:
+        - checkout
+        - docker/dockerlint:
+            treat-warnings-as-errors: true
 
 jobs:
   test:
@@ -32,11 +39,12 @@ workflows:
   commit:
     jobs:
       - test
+  lint-dockerfile:
+    jobs:
+      - lint
   build-and-publish:
     executor: docker/docker
     jobs:
-      - docker/dockerlint:
-          treat-warnings-as-errors: true
       - docker/publish:
           cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
