@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { SpecialitiesModule } from './specialities/specialities.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { ReportsModule } from './reports/reports.module';
+import { DocumentsModule } from './documents/documents.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ReportsModule } from './reports/reports.module';
     StatisticsModule,
     BooksModule,
     ReportsModule,
+    DocumentsModule,
   ],
   controllers: [],
   providers: [],

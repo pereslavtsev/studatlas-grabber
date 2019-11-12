@@ -12,12 +12,12 @@ export class ReportsService {
     const { data } = await client.post(
       '/Totals/Default.aspx',
       {
-        cmbFacultets: '29',
+        cmbFacultets: '42',
         cmbYears: '2018-2019',
       },
       {},
     );
-    //console.log(data);
+    console.log(data);
     const dataGrid = new DataGrid('table[id*="GridGroup"]', data);
     const entities = dataGrid.extract(REPORT_SCHEMA);
     // tslint:disable-next-line:no-console

@@ -3,6 +3,8 @@ import { RpcException } from '@nestjs/microservices';
 import axios, { AxiosRequestConfig } from 'axios';
 import * as grpc from 'grpc';
 import { AcademiesService } from '../../academies/academies.service';
+import { transformRequest } from '../helpers/transform-request.helper';
+import { transformResponse } from '../helpers/transform-response.helper';
 import { requestInterceptor } from '../interceptors/request.interceptor';
 
 @Injectable()
@@ -16,6 +18,9 @@ export class GrabberService {
 
     const clientConfig: AxiosRequestConfig = {
       baseURL: academy.endpoint,
+      responseType: 'arraybuffer',
+      transformRequest,
+      transformResponse,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
