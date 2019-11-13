@@ -16,9 +16,9 @@ message Speciality {
     string name = 3;
     string code = 4;
     string qualification = 5;
-    string divisionId = 6;
+    string division_id = 6;
     string division = 7;
-    string facultyId = 8;
+    string faculty_id = 8;
     string faculty = 9;
 }
 

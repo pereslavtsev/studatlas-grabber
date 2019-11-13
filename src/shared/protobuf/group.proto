@@ -20,7 +20,7 @@ message Group {
     int32 countTargeted = 6;
     int32 countSpecial = 7;
     string curricula = 8;
-    string specialityId = 9;
+    string speciality_id = 9;
     string speciality = 10;
 }
 

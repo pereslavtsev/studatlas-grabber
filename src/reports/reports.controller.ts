@@ -8,9 +8,14 @@ export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
   @GrpcMethod('ReportService', 'ListFacultyReports')
-  async findByFacultyId({ academyId, facultyId }: ListFacultyReportsRequest) {
+  async findByFacultyId({
+    academyId,
+    facultyId,
+    years,
+  }: ListFacultyReportsRequest) {
     const reports = await this.reportsService.fetchByFacultyId(
       facultyId,
+      years,
       academyId,
     );
     return { data: reports };

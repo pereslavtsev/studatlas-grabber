@@ -14,9 +14,9 @@ message Statistics {
     int32 noRatings = 4;
     int32 notClosed = 5;
     int32 blank = 6;
-    string divisionId = 7;
+    string division_id = 7;
     string division = 8;
-    string facultyId = 9;
+    string faculty_id = 9;
     string faculty = 10;
 }
 

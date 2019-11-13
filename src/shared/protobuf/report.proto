@@ -20,7 +20,7 @@ message Report {
 message ListFacultyReportsRequest {
     string academy_id = 1;
     int32 faculty_id = 2;
-    string year = 3;
+    string years = 3;
 }
 
 message ListReportsResponse {
