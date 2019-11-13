@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 import "./entity.proto";
-import "./speciality.proto";
 
 package grabber;
 
@@ -13,22 +12,16 @@ service GroupService {
 }
 
 message Group {
-    string type = 1;
-    string id = 2;
-    message Attributes {
-        string name = 1;
-        int32 year = 2;
-        int32 countAll = 3;
-        int32 countCommon = 4;
-        int32 countTargeted = 5;
-        int32 countSpecial = 6;
-        string curricula = 7;
-    }
-    Attributes attributes = 3;
-    message Relationships {
-        SpecialityRelationship speciality = 1;
-    }
-    Relationships relationships = 4;
+    string id = 1;
+    string name = 2;
+    int32 year = 3;
+    int32 countAll = 4;
+    int32 countCommon = 5;
+    int32 countTargeted = 6;
+    int32 countSpecial = 7;
+    string curricula = 8;
+    string specialityId = 9;
+    string speciality = 10;
 }
 
 message GroupRelationship {
@@ -37,8 +30,6 @@ message GroupRelationship {
 
 message ListGroupsRequest {
     string academy_id = 1;
-    //string parent = 2;
-    //string page_token = 6;
 }
 
 message ListFacultyGroupsRequest {
@@ -53,8 +44,4 @@ message ListSpecialityGroupsRequest {
 
 message ListGroupsResponse {
     repeated Group data = 1;
-    message Included {
-        Speciality speciality = 1;
-    }
-    repeated Speciality included = 14;
 }

@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "./group.proto";
-
 package grabber;
 
 service BookService {
@@ -10,16 +8,9 @@ service BookService {
 }
 
 message Book {
-    string type = 1; // books
-    string id = 2;
-    message Attributes {
-        string code = 1;
-    }
-    Attributes attributes = 3;
-    message Relationships {
-        GroupRelationship group = 1;
-    }
-    Relationships relationships = 4;
+    string id = 1;
+    string code = 2;
+    string group_id = 3;
 }
 
 message ListGroupBooksRequest {
@@ -29,28 +20,19 @@ message ListGroupBooksRequest {
 
 message ListBooksResponse {
     repeated Book data = 1;
-    message Included {
-    }
 }
 
 // Entries
 
 message Entry {
-    string type = 1; // entries
-    string id = 2;
-    message Attributes {
-        int32 semester = 1;
-        string subject = 2;
-        string mark = 3;
-        int32 hours = 4;
-        string teacher = 5;
-        string unit = 6;
-        string type = 7;
-    }
-    Attributes attributes = 3;
-    message Relationships {
-    }
-    Relationships relationships = 4;
+    string id = 1;
+    int32 semester = 2;
+    string subject = 3;
+    string mark = 4;
+    int32 hours = 5;
+    string teacher = 6;
+    string unit = 7;
+    string type = 8;
 }
 
 message ListBookEntriesRequest {
@@ -61,7 +43,5 @@ message ListBookEntriesRequest {
 
 message ListEntriesResponse {
     repeated Entry data = 1;
-    message Included {
-    }
 }
 

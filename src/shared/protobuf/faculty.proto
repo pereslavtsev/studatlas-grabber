@@ -10,19 +10,12 @@ service FacultyService {
 }
 
 message Faculty {
-    string type = 1;
-    string id = 2;
-    message Attributes {
-        string name = 1;
-        string abbreviation = 2;
-        string head = 3;
-        string phone = 4;
-        string room = 5;
-    }
-    Attributes attributes = 3;
-    message Relationships {
-    }
-    Relationships relationships = 4;
+    string id = 1;
+    string name = 2;
+    string abbreviation = 3;
+    string head = 4;
+    string phone = 5;
+    string room = 6;
 }
 
 message FacultyRelationship {
@@ -31,8 +24,6 @@ message FacultyRelationship {
 
 message ListFacultiesRequest {
     string academy_id = 1;
-    //string parent = 2;
-    //string page_token = 4;
 }
 
 message ListFacultiesResponse {

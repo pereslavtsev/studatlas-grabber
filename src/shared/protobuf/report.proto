@@ -9,15 +9,12 @@ service ReportService {
 }
 
 message Report {
-    string type = 1; // reports
-    string id = 2;
-    message Attributes {
-    }
-    Attributes attributes = 3;
-    message Relationships {
-        GroupRelationship group = 1;
-    }
-    Relationships relationships = 4;
+    string id = 1;
+    string name = 2;
+    string year = 3;
+    string speciality = 4;
+    int32 count = 5;
+    string curricula = 6;
 }
 
 message ListFacultyReportsRequest {
@@ -28,8 +25,4 @@ message ListFacultyReportsRequest {
 
 message ListReportsResponse {
     repeated Report data = 1;
-    message Included {
-        Group group = 1;
-    }
-    repeated Group included = 14;
 }

@@ -2,7 +2,6 @@ import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { ListFacultyReportsRequest } from './interfaces/requests/list-faculty-reports-request.interface';
 import { ReportsService } from './reports.service';
-import { reportSerializer } from './serializers/report.serializer';
 
 @Controller()
 export class ReportsController {
@@ -14,6 +13,6 @@ export class ReportsController {
       facultyId,
       academyId,
     );
-    return reportSerializer.serialize(reports);
+    return { data: reports };
   }
 }
