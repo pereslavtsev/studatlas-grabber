@@ -4,7 +4,6 @@ import * as grpc from 'grpc';
 import { GetSpecialityRequest } from './interfaces/requests/get-speciality-request.interface';
 import { ListFacultySpecialitiesRequest } from './interfaces/requests/list-faculty-specialities-request.interface';
 import { ListSpecialitiesRequest } from './interfaces/requests/list-specialities-request.interface';
-import { specialitySerializer } from './serializers/speciality.serializer';
 import { SpecialitiesService } from './specialities.service';
 
 @Controller()
@@ -20,13 +19,13 @@ export class SpecialitiesController {
         message: 'Speciality is not found',
       });
     }
-    return specialitySerializer.serialize([speciality]);
+    return { data: [speciality] };
   }
 
   @GrpcMethod('SpecialityService', 'ListSpecialities')
   async findAll({ academyId }: ListSpecialitiesRequest) {
     const specialities = await this.specialitiesService.fetchAll(academyId);
-    return specialitySerializer.serialize(specialities);
+    return { data: specialities };
   }
 
   @GrpcMethod('SpecialityService', 'ListFacultySpecialities')
@@ -38,6 +37,6 @@ export class SpecialitiesController {
       facultyId,
       academyId,
     );
-    return specialitySerializer.serialize(specialities);
+    return { data: specialities };
   }
 }

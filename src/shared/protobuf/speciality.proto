@@ -1,8 +1,6 @@
 syntax = "proto3";
 
-import "./division.proto";
 import "./entity.proto";
-import "./faculty.proto";
 
 package grabber;
 
@@ -13,20 +11,15 @@ service SpecialityService {
 }
 
 message Speciality {
-    string type = 1; // specialities
-    string id = 2;
-    message Attributes {
-        string shortName = 1;
-        string name = 2;
-        string code = 7;
-        string qualification = 8;
-    }
-    Attributes attributes = 3;
-    message Relationships {
-        DivisionRelationship division = 1;
-        FacultyRelationship faculty = 2;
-    }
-    Relationships relationships = 4;
+    string id = 1;
+    string shortName = 2;
+    string name = 3;
+    string code = 4;
+    string qualification = 5;
+    string division_id = 6;
+    string division = 7;
+    string faculty_id = 8;
+    string faculty = 9;
 }
 
 message SpecialityRelationship {
@@ -35,22 +28,13 @@ message SpecialityRelationship {
 
 message ListSpecialitiesRequest {
     string academy_id = 1;
-    //string parent = 2;
-    //string page_token = 4;
 }
 
 message ListFacultySpecialitiesRequest {
     string academy_id = 1;
     string faculty_id = 2;
-    //string parent = 3;
-    //string page_token = 5;
 }
 
 message ListSpecialitiesResponse {
     repeated Speciality data = 1;
-    message Included {
-        Division division = 1;
-        Faculty faculty = 2;
-    }
-    repeated Faculty included = 14;
 }

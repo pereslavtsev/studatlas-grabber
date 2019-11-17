@@ -8,19 +8,14 @@ service AcademyService {
 }
 
 message Academy {
-    string type = 1;
-    string id = 2;
-    message Attributes {
-        string name = 1;
-        string abbreviation = 2;
-        string alias = 3;
-        string website = 4;
-        string endpoint = 5;
-        string version = 6;
-    }
-    Attributes attributes = 3;
-    message Relationships {}
-    Relationships relationships = 4;
+    string id = 1;
+    string name = 2;
+    string abbreviation = 3;
+    string alias = 4;
+    string website = 5;
+    string endpoint = 6;
+    string version = 7;
+    repeated string disabledSources = 8;
 }
 
 message GetAcademyRequest {
@@ -31,5 +26,4 @@ message ListAcademiesRequest {}
 
 message ListAcademiesResponse {
     repeated Academy data = 1;
-    string next_page_token = 2;
 }

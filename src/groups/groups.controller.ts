@@ -6,7 +6,6 @@ import { GetGroupRequest } from './interfaces/requests/get-group-request.interfa
 import { ListFacultyGroupsRequest } from './interfaces/requests/list-faculty-groups-request.interface';
 import { ListGroupsRequest } from './interfaces/requests/list-groups-request.interface';
 import { ListSpecialityGroupsRequest } from './interfaces/requests/list-speciality-groups-request.interface';
-import { groupSerializer } from './serializers/group.serializer';
 
 @Controller()
 export class GroupsController {
@@ -21,7 +20,7 @@ export class GroupsController {
         message: 'Group is not found',
       });
     }
-    return groupSerializer.serialize([group]);
+    return { data: [group] };
   }
 
   @GrpcMethod('GroupService', 'ListFacultyGroups')
@@ -30,7 +29,7 @@ export class GroupsController {
       facultyId,
       academyId,
     );
-    return groupSerializer.serialize(groups);
+    return { data: groups };
   }
 
   @GrpcMethod('GroupService', 'ListSpecialityGroups')
@@ -42,12 +41,12 @@ export class GroupsController {
       specialityId,
       academyId,
     );
-    return groupSerializer.serialize(groups);
+    return { data: groups };
   }
 
   @GrpcMethod('GroupService', 'ListGroups')
   async findAll({ academyId }: ListGroupsRequest) {
     const groups = await this.groupsService.fetchAll(academyId);
-    return groupSerializer.serialize(groups);
+    return { data: groups };
   }
 }

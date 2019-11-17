@@ -1,8 +1,5 @@
 syntax = "proto3";
 
-import "./division.proto";
-import "./faculty.proto";
-
 package grabber;
 
 service StatisticsService {
@@ -11,21 +8,16 @@ service StatisticsService {
 }
 
 message Statistics {
-    string type = 1; // statistics
-    string id = 2;
-    message Attributes {
-        int32 all = 1;
-        int32 noCheckpoints = 2;
-        int32 noRatings = 3 ;
-        int32 notClosed = 4;
-        int32 blank = 5;
-    }
-    Attributes attributes = 3;
-    message Relationships {
-        DivisionRelationship division = 1;
-        FacultyRelationship faculty = 2;
-    }
-    Relationships relationships = 4;
+    string id = 1;
+    int32 all = 2;
+    int32 noCheckpoints = 3;
+    int32 noRatings = 4;
+    int32 notClosed = 5;
+    int32 blank = 6;
+    string division_id = 7;
+    string division = 8;
+    string faculty_id = 9;
+    string faculty = 10;
 }
 
 message ListStatisticsRequest {
@@ -36,9 +28,4 @@ message ListStatisticsRequest {
 
 message ListStatisticsResponse {
     repeated Statistics data = 1;
-    message Included {
-        Division division = 1;
-        Faculty faculty = 2;
-    }
-    repeated Faculty included = 14; // TODO: !
 }
