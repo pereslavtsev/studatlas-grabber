@@ -1,7 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { ListStatisticsRequest } from './interfaces/list-statistics-request.interface';
-import { statisticsSerializer } from './serializers/statistics.serializer';
 import { StatisticsService } from './statistics.service';
 
 @Controller()
@@ -15,7 +14,7 @@ export class StatisticsController {
       semester,
       academyId,
     );
-    return statisticsSerializer.serialize(statistics);
+    return { data: statistics };
   }
 
   @GrpcMethod('StatisticsService', 'ListFacultiesStatistics')
@@ -25,6 +24,6 @@ export class StatisticsController {
       semester,
       academyId,
     );
-    return statisticsSerializer.serialize(statistics);
+    return { data: statistics };
   }
 }

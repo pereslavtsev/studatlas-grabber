@@ -4,7 +4,6 @@ import * as grpc from 'grpc';
 import { DivisionsService } from './divisions.service';
 import { GetDivisionRequest } from './interfaces/get-division-request.interface';
 import { ListDivisionsRequest } from './interfaces/list-divisions-request.interface';
-import { divisionSerializer } from './serializers/division.serializer';
 
 @Controller()
 export class DivisionsController {
@@ -19,12 +18,12 @@ export class DivisionsController {
         message: 'Division is not found',
       });
     }
-    return divisionSerializer.serialize([division]);
+    return { data: [division] };
   }
 
   @GrpcMethod('DivisionService', 'ListDivisions')
   async findAll({ academyId }: ListDivisionsRequest) {
     const divisions = await this.divisionsService.fetchAll(academyId);
-    return divisionSerializer.serialize(divisions);
+    return { data: divisions };
   }
 }

@@ -3,8 +3,8 @@ import { RpcException } from '@nestjs/microservices';
 import * as cheerio from 'cheerio';
 import * as grpc from 'grpc';
 import { DataGrid } from '../grabber/classes/data-grid.class';
-import { GrabberService } from '../grabber/grabber.service';
 import { DictionaryFilter } from '../grabber/interfaces/dictionary-filter.enum';
+import { GrabberService } from '../grabber/services/grabber.service';
 import { GROUP_SCHEMA } from './mocks/group-schema.mock';
 
 @Injectable()

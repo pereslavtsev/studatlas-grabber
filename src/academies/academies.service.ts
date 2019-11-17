@@ -20,6 +20,7 @@ export class AcademiesService {
     'website',
     'endpoint',
     'version',
+    'disabledSources',
   ];
 
   async findById(id: string): Promise<Academy> {

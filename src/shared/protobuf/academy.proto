@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package grabber;
+
+service AcademyService {
+    rpc GetAcademy (GetAcademyRequest) returns (ListAcademiesResponse) {}
+    rpc ListAcademies (ListAcademiesRequest) returns (ListAcademiesResponse) {}
+}
+
+message Academy {
+    string id = 1;
+    string name = 2;
+    string abbreviation = 3;
+    string alias = 4;
+    string website = 5;
+    string endpoint = 6;
+    string version = 7;
+    repeated string disabledSources = 8;
+}
+
+message GetAcademyRequest {
+    string id = 1;
+}
+
+message ListAcademiesRequest {}
+
+message ListAcademiesResponse {
+    repeated Academy data = 1;
+}
