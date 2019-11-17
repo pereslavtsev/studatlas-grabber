@@ -28,6 +28,5 @@ export const transformData = (
     return fixedDataField;
   });
   const transformedData = _.merge(additionalParams, fixedData);
-  console.log({ data, transformedData  })
   return transformedData as TransformedPostData;
 };

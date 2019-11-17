@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package grabber;
+
+service DocumentService {
+    rpc GetDocument (GetDocumentRequest) returns (Document) {}
+    rpc ListDocumentSaveStories (GetDocumentRequest) returns (ListDocumentSaveStoriesResponse) {}
+}
+
+message Document {
+    string id = 1;
+    string group_id = 2;
+    string group_name = 3;
+    string unit = 4;
+    string division_id = 5;
+    string division_name = 6;
+    string year = 7;
+    int32 year_number = 8;
+    string teacher = 9;
+    int32 semester = 10;
+    int32 hours = 11;
+    string subject = 12;
+    string type = 13;
+    int32 saves_count = 14;
+    string curricula = 15;
+    string status = 16;
+    string updated_at = 17;
+    string device = 18;
+    message Item {
+        string book_id = 1;
+        string book_code = 2;
+        string date = 3;
+        string mark = 4;
+    }
+    repeated Item items = 19;
+}
+
+message SaveStory {
+    string date = 1;
+    string login = 2;
+    string username = 3;
+    string post = 4;
+    string device = 5;
+}
+
+message GetDocumentRequest {
+    int32 id = 1;
+    string academy_id = 2;
+}
+
+message ListDocumentSaveStoriesResponse {
+    repeated SaveStory data = 1;
+}
