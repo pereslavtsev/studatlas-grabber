@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+import "./entity.proto";
+
+package grabber;
+
+service GroupService {
+    rpc GetGroup (GetEntityRequest) returns (ListGroupsResponse) {}
+    rpc ListGroups (ListGroupsRequest) returns (ListGroupsResponse) {}
+    rpc ListFacultyGroups (ListFacultyGroupsRequest) returns (ListGroupsResponse) {}
+    rpc ListSpecialityGroups (ListSpecialityGroupsRequest) returns (ListGroupsResponse) {}
+}
+
+message Group {
+    string id = 1;
+    string name = 2;
+    int32 year = 3;
+    int32 countAll = 4;
+    int32 countCommon = 5;
+    int32 countTargeted = 6;
+    int32 countSpecial = 7;
+    string curricula = 8;
+    string speciality_id = 9;
+    string speciality = 10;
+}
+
+message GroupRelationship {
+    Group data = 1;
+}
+
+message ListGroupsRequest {
+    string academy_id = 1;
+}
+
+message ListFacultyGroupsRequest {
+    string academy_id = 1;
+    int32 faculty_id = 2;
+}
+
+message ListSpecialityGroupsRequest {
+    string academy_id = 1;
+    int32 speciality_id = 2;
+}
+
+message ListGroupsResponse {
+    repeated Group data = 1;
+}

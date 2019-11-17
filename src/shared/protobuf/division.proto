@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+import "./entity.proto";
+
+package grabber;
+
+service DivisionService {
+    rpc GetDivision (GetEntityRequest) returns (ListDivisionsResponse) {}
+    rpc ListDivisions (ListDivisionsRequest) returns (ListDivisionsResponse) {}
+}
+
+message Division {
+    string id = 1;
+    string name = 2;
+    string abbreviation = 3;
+    string head = 4;
+    string phone = 5;
+    string room = 6;
+}
+
+message DivisionRelationship {
+    Division data = 1;
+}
+
+message ListDivisionsRequest {
+    string academy_id = 1;
+}
+
+message ListDivisionsResponse {
+    repeated Division data = 1;
+}
