@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "./entity.proto";
+
+package grabber;
+
+service SpecialityService {
+    rpc GetSpeciality (GetEntityRequest) returns (ListSpecialitiesResponse) {}
+    rpc ListSpecialities (ListSpecialitiesRequest) returns (ListSpecialitiesResponse) {}
+    rpc ListFacultySpecialities (ListFacultySpecialitiesRequest) returns (ListSpecialitiesResponse) {}
+}
+
+message Speciality {
+    string id = 1;
+    string shortName = 2;
+    string name = 3;
+    string code = 4;
+    string qualification = 5;
+    string division_id = 6;
+    string division = 7;
+    string faculty_id = 8;
+    string faculty = 9;
+}
+
+message SpecialityRelationship {
+    Speciality data = 1;
+}
+
+message ListSpecialitiesRequest {
+    string academy_id = 1;
+}
+
+message ListFacultySpecialitiesRequest {
+    string academy_id = 1;
+    string faculty_id = 2;
+}
+
+message ListSpecialitiesResponse {
+    repeated Speciality data = 1;
+}

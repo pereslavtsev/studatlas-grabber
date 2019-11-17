@@ -10,7 +10,7 @@ export class DataGrid {
   private rows: Cheerio;
 
   protected static selectors = {
-    headers: ['.TblHead td', 'tr[id*="DXHeaders"] td table td'],
+    headers: ['.TblHead td', '.TblHead th', 'tr[id*="DXHeaders"] td table td'],
     rows: ['.TblText', '.TblhiText', 'tr[id*="DXDataRow"]'],
   };
 
@@ -23,7 +23,7 @@ export class DataGrid {
     this.rows = this.$(this.root).find(DataGrid.selectors.rows.join(', '));
   }
 
-  public extract(schema: Schema): any {
+  public extract(schema: Schema): any[] {
     const positions = {};
     schema.attributes.map(attribute => {
       positions[attribute.name] = this.headers
@@ -41,7 +41,9 @@ export class DataGrid {
             .text()
             .trim();
           // @ts-ignore
-          return attribute.columns.includes(headerText);
+          return !!attribute.columns.find(
+            h => h.toLowerCase() === headerText.toLowerCase(),
+          );
         });
     });
 
@@ -62,7 +64,8 @@ export class DataGrid {
             case 'id': {
               const stringified = elem.find('a').attr('href');
               const parsed = queryString.parse(stringified);
-              value = parsed.id || parsed['Ved.aspx?id'];
+              value =
+                parsed.id || parsed['Ved.aspx?id'] || parsed['Totals.aspx?group'];
               break;
             }
             case 'numeric': {
