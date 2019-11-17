@@ -2,10 +2,11 @@ version: 2.1
 
 orbs:
   node: circleci/node@1.1
+  docker: circleci/docker@0.5.17
 
 jobs:
-  build:
-    working_directory: ~/grabber
+
+  test:
     docker:
       - image: circleci/node:12.5.0
         environment:
@@ -19,11 +20,50 @@ jobs:
       - checkout
       - run:
           name: Waiting for MongoDB to be ready
-          command: sh .circleci/wait-mongo.sh
+          command: sh .circleci/wait-for-mongo.sh
       - node/with-cache:
           steps:
             - run: yarn install
-      #- run: yarn test
+
+# linting a dockerfile
+  lint-dockerfile:
+    executor: docker/machine
+    steps:
+      - checkout
+      - docker/dockerlint:
+          treat-warnings-as-errors: true
+
+# docker push
+  build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          tag: latest
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          tag: latest
       - run:
-          name: lint
-          command: yarn lint
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
+
+# workflows
+workflows:
+  build-and-test:
+    jobs:
+      - test
+      - lint-dockerfile:
+          requires:
+            - test
+      - build-and-push:
+          requires:
+            - lint-dockerfile
+          filters:
+            branches:
+              only: master
+

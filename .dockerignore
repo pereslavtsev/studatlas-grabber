@@ -1,5 +1,7 @@
 .git
+.github
 .gitignore
+
 .prettierrc
 tslint.json
 .env.example

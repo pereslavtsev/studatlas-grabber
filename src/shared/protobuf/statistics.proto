@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package grabber;
+
+service StatisticsService {
+    rpc ListDivisionsStatistics (ListStatisticsRequest) returns (ListStatisticsResponse) {}
+    rpc ListFacultiesStatistics (ListStatisticsRequest) returns (ListStatisticsResponse) {}
+}
+
+message Statistics {
+    string id = 1;
+    int32 all = 2;
+    int32 noCheckpoints = 3;
+    int32 noRatings = 4;
+    int32 notClosed = 5;
+    int32 blank = 6;
+    string division_id = 7;
+    string division = 8;
+    string faculty_id = 9;
+    string faculty = 10;
+}
+
+message ListStatisticsRequest {
+    string academy_id = 1;
+    string year = 2;
+    int32 semester = 3;
+}
+
+message ListStatisticsResponse {
+    repeated Statistics data = 1;
+}
