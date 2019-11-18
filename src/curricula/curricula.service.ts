@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { SOURCES } from '../grabber/mocks/sources.mock';
 import { GrabberService } from '../grabber/services/grabber.service';
+import { CurriculaItem } from './interfaces/curricula-item.interface';
 import { ListFacultyCurricula } from './interfaces/requests/list-faculty-curricula.interface';
 import { CURRICULA_SCHEMA } from './mocks/curricula-schema.mock';
 
@@ -9,7 +10,11 @@ import { CURRICULA_SCHEMA } from './mocks/curricula-schema.mock';
 export class CurriculaService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  private async fetch({ academyId, facultyId, years }: ListFacultyCurricula) {
+  private async fetch({
+    academyId,
+    facultyId,
+    years,
+  }: ListFacultyCurricula): Promise<CurriculaItem[]> {
     const curriculaSource = SOURCES.find(source => source.id === 'curricula');
     const client = await this.grabberService.create(academyId);
     const { data } = await client.post(curriculaSource.path, {
