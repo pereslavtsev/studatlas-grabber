@@ -7,6 +7,7 @@ import { STATISTICS_SCHEMA } from './mocks/statistics-schema.mock';
 export class StatisticsService {
   constructor(private readonly grabberService: GrabberService) {}
 
+  // TODO: year, semester
   private async fetch(academyId: string, params?: any) {
     const client = await this.grabberService.create(academyId);
     const { data } = await client.get('/Stat/Default.aspx', {

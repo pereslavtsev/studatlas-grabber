@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "./academy.proto";
 import "./book.proto";
+import "./curricula.proto";
 import "./document.proto";
 import "./division.proto";
 import "./faculty.proto";

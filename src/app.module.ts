@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from 'nestjs-config';
 import * as path from 'path';
 import { BooksModule } from './books/books.module';
+import { CurriculaModule } from './curricula/curricula.module';
 import { DivisionsModule } from './divisions/divisions.module';
 import { DocumentsModule } from './documents/documents.module';
 import { FacultiesModule } from './faculties/faculties.module';
@@ -30,6 +31,7 @@ import { StatisticsModule } from './statistics/statistics.module';
     BooksModule,
     ReportsModule,
     DocumentsModule,
+    CurriculaModule,
   ],
   controllers: [],
   providers: [],
