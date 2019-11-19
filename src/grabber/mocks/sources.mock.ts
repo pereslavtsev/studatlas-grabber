@@ -9,6 +9,14 @@ export const SOURCES: Source[] = [
     path: `/Dek/${INDEX_PAGE}`,
   },
   {
+    id: 'document',
+    path: `/Ved/Ved${FILE_EXT}`,
+  },
+  {
+    id: 'save_stories',
+    path: `/Ved/StorySave${FILE_EXT}`,
+  },
+  {
     id: 'books',
     path: `/Ved/ZachBooks${FILE_EXT}`,
   },
