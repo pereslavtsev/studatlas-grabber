@@ -8,22 +8,22 @@ export class StatisticsController {
   constructor(private readonly statisticsService: StatisticsService) {}
 
   @GrpcMethod('StatisticsService', 'ListDivisionsStatistics')
-  async findByDivisions({ academyId, year, semester }: ListStatisticsRequest) {
-    const statistics = await this.statisticsService.fetchByDivisions(
-      year,
+  async findByDivisions({ academyId, years, semester }: ListStatisticsRequest) {
+    const statistics = await this.statisticsService.fetchByDivisions({
+      years,
       semester,
       academyId,
-    );
+    });
     return { data: statistics };
   }
 
   @GrpcMethod('StatisticsService', 'ListFacultiesStatistics')
-  async findByFaculties({ academyId, year, semester }: ListStatisticsRequest) {
-    const statistics = await this.statisticsService.fetchByDivisions(
-      year,
+  async findByFaculties({ academyId, years, semester }: ListStatisticsRequest) {
+    const statistics = await this.statisticsService.fetchByFaculties({
+      years,
       semester,
       academyId,
-    );
+    });
     return { data: statistics };
   }
 }

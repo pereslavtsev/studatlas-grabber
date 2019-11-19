@@ -1,5 +1,6 @@
-export interface ListStatisticsRequest {
-  academyId: string;
-  year: string;
-  semester: number;
+import { EntityRequest } from '../../../grabber/interfaces/requests/entity-request.interface';
+
+export interface ListStatisticsRequest extends EntityRequest {
+  years: string;
+  semester: 0 | 1;
 }

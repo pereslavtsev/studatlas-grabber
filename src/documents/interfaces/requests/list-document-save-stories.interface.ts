@@ -1,4 +1,5 @@
-export interface ListDocumentSaveStories {
+import { EntityRequest } from '../../../grabber/interfaces/requests/entity-request.interface';
+
+export interface ListDocumentSaveStories extends EntityRequest {
   id: number;
-  academyId: string;
 }

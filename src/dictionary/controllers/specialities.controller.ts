@@ -13,8 +13,8 @@ export class SpecialitiesController {
   constructor(private readonly specialitiesService: SpecialitiesService) {}
 
   @GrpcMethod('SpecialityService', 'GetSpeciality')
-  async findOne({ id, academy_id }: GetSpecialityRequest) {
-    const speciality = await this.specialitiesService.fetchById(id, academy_id);
+  async findOne({ id, academyId }: GetSpecialityRequest) {
+    const speciality = await this.specialitiesService.fetchById(id, academyId);
     if (!speciality) {
       throw new RpcException({
         code: grpc.status.NOT_FOUND,
@@ -31,14 +31,8 @@ export class SpecialitiesController {
   }
 
   @GrpcMethod('SpecialityService', 'ListFacultySpecialities')
-  async findByFacultyId({
-    facultyId,
-    academyId,
-  }: ListFacultySpecialitiesRequest) {
-    const specialities = await this.specialitiesService.fetchByFacultyId(
-      facultyId,
-      academyId,
-    );
+  async findByFacultyId({ facultyId, academyId }: ListFacultySpecialitiesRequest) {
+    const specialities = await this.specialitiesService.fetchByFacultyId(facultyId, academyId);
     return { data: specialities };
   }
 }

@@ -23,7 +23,7 @@ message Statistics {
 
 message ListStatisticsRequest {
     string academy_id = 1;
-    string year = 2;
+    string years = 2;
     int32 semester = 3;
 }
 

@@ -1,6 +1,7 @@
-export interface ListGroupsDebtorsStatisticsRequest {
+import { EntityRequest } from '../../../grabber/interfaces/requests/entity-request.interface';
+
+export interface ListGroupsDebtorsStatisticsRequest extends EntityRequest {
   facultyId?: number | undefined;
   years: string;
-  semester: number;
-  academyId: string;
+  semester: 1 | 2;
 }
