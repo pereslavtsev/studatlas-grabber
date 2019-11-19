@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { DataGrid } from '../grabber/classes/data-grid.class';
-import { DictionaryFilter } from '../grabber/interfaces/dictionary-filter.enum';
-import { GrabberService } from '../grabber/services/grabber.service';
-import { SPECIALITY_SCHEMA } from './mocks/speciality-schema.mock';
+import { DataGrid } from '../../grabber/classes/data-grid.class';
+import { DictionaryFilter } from '../../grabber/interfaces/dictionary-filter.enum';
+import { GrabberService } from '../../grabber/services/grabber.service';
+import { SPECIALITY_SCHEMA } from '../mocks/speciality-schema.mock';
 
 @Injectable()
 export class SpecialitiesService {

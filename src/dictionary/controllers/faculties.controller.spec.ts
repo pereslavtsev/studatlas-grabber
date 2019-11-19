@@ -1,10 +1,10 @@
 import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AcademiesModule } from '../academies/academies.module';
-import { AcademySchema } from '../academies/schemas/academy.schema';
-import { GrabberModule } from '../grabber/grabber.module';
+import { AcademiesModule } from '../../academies/academies.module';
+import { AcademySchema } from '../../academies/schemas/academy.schema';
+import { GrabberModule } from '../../grabber/grabber.module';
+import { FacultiesService } from '../services/faculties.service';
 import { FacultiesController } from './faculties.controller';
-import { FacultiesService } from './faculties.service';
 
 describe('Faculties Controller', () => {
   let controller: FacultiesController;

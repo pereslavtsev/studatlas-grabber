@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { DataGrid } from '../grabber/classes/data-grid.class';
-import { GrabberService } from '../grabber/services/grabber.service';
-import { FACULTY_SCHEMA } from './mocks/faculty-schema.mock';
+import { DataGrid } from '../../grabber/classes/data-grid.class';
+import { GrabberService } from '../../grabber/services/grabber.service';
+import { FACULTY_SCHEMA } from '../mocks/faculty-schema.mock';
 
 @Injectable()
 export class FacultiesService {

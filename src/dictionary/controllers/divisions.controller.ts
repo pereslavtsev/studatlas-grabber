@@ -1,9 +1,9 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import * as grpc from 'grpc';
-import { DivisionsService } from './divisions.service';
-import { GetDivisionRequest } from './interfaces/get-division-request.interface';
-import { ListDivisionsRequest } from './interfaces/list-divisions-request.interface';
+import { GetDivisionRequest } from '../interfaces/requests/get-division-request.interface';
+import { ListDivisionsRequest } from '../interfaces/requests/list-divisions-request.interface';
+import { DivisionsService } from '../services/divisions.service';
 
 @Controller()
 export class DivisionsController {

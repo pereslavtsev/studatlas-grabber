@@ -1,11 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import * as grpc from 'grpc';
-import { GroupsService } from './groups.service';
-import { GetGroupRequest } from './interfaces/requests/get-group-request.interface';
-import { ListFacultyGroupsRequest } from './interfaces/requests/list-faculty-groups-request.interface';
-import { ListGroupsRequest } from './interfaces/requests/list-groups-request.interface';
-import { ListSpecialityGroupsRequest } from './interfaces/requests/list-speciality-groups-request.interface';
+import { GetGroupRequest } from '../interfaces/requests/get-group-request.interface';
+import { ListFacultyGroupsRequest } from '../interfaces/requests/list-faculty-groups-request.interface';
+import { ListGroupsRequest } from '../interfaces/requests/list-groups-request.interface';
+import { ListSpecialityGroupsRequest } from '../interfaces/requests/list-speciality-groups-request.interface';
+import { GroupsService } from '../services/groups.service';
 
 @Controller()
 export class GroupsController {

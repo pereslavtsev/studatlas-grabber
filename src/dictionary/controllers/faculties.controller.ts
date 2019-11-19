@@ -1,9 +1,9 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import * as grpc from 'grpc';
-import { FacultiesService } from './faculties.service';
-import { GetFacultyRequest } from './interfaces/get-faculty-request.interface';
-import { ListFacultiesRequest } from './interfaces/list-faculties-request.interface';
+import { GetFacultyRequest } from '../interfaces/requests/get-faculty-request.interface';
+import { ListFacultiesRequest } from '../interfaces/requests/list-faculties-request.interface';
+import { FacultiesService } from '../services/faculties.service';
 
 @Controller()
 export class FacultiesController {
