@@ -17,6 +17,10 @@ export const SOURCES: Source[] = [
     path: `/Stat/${INDEX_PAGE}`,
   },
   {
+    id: 'debtors_statistics',
+    path: `/Stat/Debtors${FILE_EXT}`,
+  },
+  {
     id: 'curricula',
     path: `/Plans/${INDEX_PAGE}`,
   },

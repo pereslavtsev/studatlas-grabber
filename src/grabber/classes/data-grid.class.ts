@@ -11,7 +11,7 @@ export class DataGrid {
 
   protected static selectors = {
     headers: ['.TblHead td', '.TblHead th', 'tr[id*="DXHeaders"] td table td'],
-    rows: ['.TblText', '.TblhiText', 'tr[id*="DXDataRow"]'],
+    rows: ['.TblText', '.TblhiText', 'tr[id*="DXDataRow"]', 'tr[align=center]:not([class])'],
   };
 
   constructor(selectors: string, html: string) {

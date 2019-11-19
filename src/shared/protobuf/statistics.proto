@@ -5,6 +5,7 @@ package grabber;
 service StatisticsService {
     rpc ListDivisionsStatistics (ListStatisticsRequest) returns (ListStatisticsResponse) {}
     rpc ListFacultiesStatistics (ListStatisticsRequest) returns (ListStatisticsResponse) {}
+    rpc ListGroupsDebtors (ListGroupsDebtorsStatisticsRequest) returns (ListGroupsDebtorsStatisticsResponse) {}
 }
 
 message Statistics {
@@ -28,4 +29,26 @@ message ListStatisticsRequest {
 
 message ListStatisticsResponse {
     repeated Statistics data = 1;
+}
+
+// Groups debtors
+
+message GroupDebtorsStatistics {
+    int32 groupId = 1;
+    string group = 2;
+    int32 year = 3;
+    int32 countAll = 4;
+    int32 countDebtors = 5;
+    int32 countCritical = 6;
+}
+
+message ListGroupsDebtorsStatisticsRequest {
+    string academy_id = 1;
+    int32 faculty_id = 2;
+    string years = 3;
+    int32 semester = 4;
+}
+
+message ListGroupsDebtorsStatisticsResponse {
+    repeated GroupDebtorsStatistics data = 1;
 }

@@ -9,6 +9,7 @@ import { DocumentsModule } from './documents/documents.module';
 import { FacultiesModule } from './faculties/faculties.module';
 import { GroupsModule } from './groups/groups.module';
 import { ReportsModule } from './reports/reports.module';
+import { SchedulesModule } from './schedules/schedules.module';
 import { MongooseConfigService } from './shared/services/mongoose-config.service';
 import { SharedModule } from './shared/shared.module';
 import { SpecialitiesModule } from './specialities/specialities.module';
@@ -32,6 +33,7 @@ import { StatisticsModule } from './statistics/statistics.module';
     ReportsModule,
     DocumentsModule,
     CurriculaModule,
+    SchedulesModule,
   ],
   controllers: [],
   providers: [],

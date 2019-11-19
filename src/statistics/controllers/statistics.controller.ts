@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ListStatisticsRequest } from './interfaces/list-statistics-request.interface';
-import { StatisticsService } from './statistics.service';
+import { ListStatisticsRequest } from '../interfaces/requests/list-statistics-request.interface';
+import { StatisticsService } from '../services/statistics.service';
 
 @Controller()
 export class StatisticsController {
