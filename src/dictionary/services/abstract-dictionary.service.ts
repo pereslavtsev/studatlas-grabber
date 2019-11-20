@@ -2,7 +2,7 @@ import { GrabberService } from '../../grabber/services/grabber.service';
 import { SourcesService } from '../../grabber/services/sources.service';
 
 export abstract class AbstractDictionaryService {
-  protected constructor(
+  public constructor(
     private readonly grabberService: GrabberService,
     private readonly sourcesService: SourcesService,
   ) {}

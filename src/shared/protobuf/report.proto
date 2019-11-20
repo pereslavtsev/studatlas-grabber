@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "./group.proto";
-
 package grabber;
 
 service ReportService {
