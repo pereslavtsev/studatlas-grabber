@@ -3,19 +3,17 @@ import { RpcException } from '@nestjs/microservices';
 import * as cheerio from 'cheerio';
 import * as grpc from 'grpc';
 import { DataGrid } from '../../grabber/classes/data-grid.class';
-import { DictionaryFilter } from '../../grabber/interfaces/dictionary-filter.enum';
-import { GrabberService } from '../../grabber/services/grabber.service';
+import { DictionaryFilter } from '../enums/dictionary-filter.enum';
 import { GROUP_SCHEMA } from '../mocks/group-schema.mock';
+import { AbstractDictionaryService } from './abstract-dictionary.service';
 
 @Injectable()
-export class GroupsService {
-  constructor(private readonly grabberService: GrabberService) {}
-
+export class GroupsService extends AbstractDictionaryService {
   private async fetch(academyId: string, params?: any) {
-    const client = await this.grabberService.create(academyId);
-    const { data } = await client.get(GrabberService.DIRECTORY_PATH, {
+    const client = await this.createClient(academyId);
+    const { data } = await client.request({
       params: {
-        mode: 'group',
+        mode: DictionaryFilter.Group,
         ...params,
       },
     });
@@ -39,9 +37,7 @@ export class GroupsService {
           }
           case DictionaryFilter.Speciality: {
             // Проверяет, есть ли такая специальность
-            const isSpecialityExists = !!pageTitle.match(
-              'Группы специальности \\S+',
-            );
+            const isSpecialityExists = !!pageTitle.match('Группы специальности \\S+');
             if (!isSpecialityExists) {
               throw new RpcException({
                 status: grpc.status.NOT_FOUND,
