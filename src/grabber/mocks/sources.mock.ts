@@ -36,4 +36,8 @@ export const SOURCES: Source[] = [
     id: 'schedules',
     path: `/Graph/${INDEX_PAGE}`,
   },
+  {
+    id: 'timetables',
+    path: `/Rasp/${INDEX_PAGE}`,
+  },
 ];

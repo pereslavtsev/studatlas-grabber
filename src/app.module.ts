@@ -11,6 +11,7 @@ import { SchedulesModule } from './schedules/schedules.module';
 import { MongooseConfigService } from './shared/services/mongoose-config.service';
 import { SharedModule } from './shared/shared.module';
 import { StatisticsModule } from './statistics/statistics.module';
+import { TimetablesModule } from './timetables/timetables.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { StatisticsModule } from './statistics/statistics.module';
     DocumentsModule,
     CurriculaModule,
     SchedulesModule,
+    TimetablesModule,
   ],
   controllers: [],
   providers: [],
