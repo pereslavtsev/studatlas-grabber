@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { ListGroupsDebtorsStatisticsRequest } from '../interfaces/requests/list-groups-debtors-statistics-request.interface';
+import { ListTeachersDebtorsStatisticsRequest } from '../interfaces/requests/list-teachers-debtors-statistics-request.interface';
 import { DebtorsService } from '../services/debtors.service';
 import { StatisticsService } from '../services/statistics.service';
 
@@ -20,6 +21,24 @@ export class DebtorsController {
       years,
       semester,
       facultyId,
+    });
+    return { data: statistics };
+  }
+
+  @GrpcMethod('StatisticsService', 'ListTeachersDebtors')
+  async findByTeachers({
+    academyId,
+    years,
+    semester,
+    facultyId,
+    divisionId,
+  }: ListTeachersDebtorsStatisticsRequest) {
+    const statistics = await this.debtorsService.fetchByTeachers({
+      academyId,
+      years,
+      semester,
+      facultyId,
+      divisionId,
     });
     return { data: statistics };
   }
