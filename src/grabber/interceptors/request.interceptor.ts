@@ -45,7 +45,7 @@ const onRejected = error => {
   return Promise.reject(error);
 };
 
-export const requestInterceptor = (disabledSources: string[]) => [
+export const requestInterceptor = (disabledSources?: string[]) => [
   onFulfilled(disabledSources),
   onRejected,
 ];
