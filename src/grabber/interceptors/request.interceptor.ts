@@ -1,15 +1,19 @@
 import axios from 'axios';
 import * as _ from 'lodash';
-import * as qs from 'qs';
 import { VIEW_STATE } from '../constants/params.constants';
 import { transformData } from '../helpers/transform-data.helper';
-import { transformRequest } from '../helpers/transform-request.helper';
-import { transformResponse } from '../helpers/transform-response.helper';
+import { SOURCES } from '../mocks/sources.mock';
 
-const onFulfilled = async config => {
+const onFulfilled = (disabledSources: string[]) => async config => {
   /** In dev, intercepts request and logs it into console for dev */
   // tslint:disable-next-line:no-console
   // console.info(config);
+
+  const source = SOURCES.find(s => s.path.includes(config.url));
+  if (_.includes(disabledSources, source.id)) {
+    console.log(1);
+  }
+
   switch (config.method) {
     case 'POST':
     case 'post': {
@@ -39,4 +43,7 @@ const onRejected = error => {
   return Promise.reject(error);
 };
 
-export const requestInterceptor = [onFulfilled, onRejected];
+export const requestInterceptor = (disabledSources: string[]) => [
+  onFulfilled(disabledSources),
+  onRejected,
+];

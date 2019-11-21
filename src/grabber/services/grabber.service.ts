@@ -24,7 +24,7 @@ export class GrabberService {
       },
     };
     const client = axios.create(clientConfig);
-    client.interceptors.request.use(...requestInterceptor);
+    client.interceptors.request.use(...requestInterceptor(academy.disabledSources));
     client.interceptors.response.use(
       response => {
         return response;
