@@ -8,7 +8,7 @@ import { AbstractDictionaryService } from './abstract-dictionary.service';
 
 @Injectable()
 export class GroupsService extends AbstractDictionaryService {
-  private async fetch(academyId: string, params?: any) {
+  protected async fetch(academyId: string, params?: any) {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
       params: {
@@ -70,9 +70,5 @@ export class GroupsService extends AbstractDictionaryService {
       id: specialityId,
       f: DictionaryFilter.Speciality,
     });
-  }
-
-  fetchAll(academyId: string) {
-    return this.fetch(academyId);
   }
 }

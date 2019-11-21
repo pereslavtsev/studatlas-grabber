@@ -13,4 +13,10 @@ export abstract class AbstractDictionaryService {
     client.defaults.url = source.path;
     return client;
   }
+
+  protected abstract async fetch(data: any): Promise<any[]>;
+
+  fetchAll(academyId: string) {
+    return this.fetch(academyId);
+  }
 }

@@ -4,10 +4,13 @@ import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.ex
 import { GetDivisionRequest } from '../interfaces/requests/get-division-request.interface';
 import { ListDivisionsRequest } from '../interfaces/requests/list-divisions-request.interface';
 import { DivisionsService } from '../services/divisions.service';
+import { AbstractDictionaryController } from './abstract-dictionary.controller';
 
 @Controller()
-export class DivisionsController {
-  constructor(private readonly divisionsService: DivisionsService) {}
+export class DivisionsController extends AbstractDictionaryController {
+  constructor(private readonly divisionsService: DivisionsService) {
+    super();
+  }
 
   @GrpcMethod('DivisionService', 'GetDivision')
   async findOne({ id, academyId }: GetDivisionRequest) {

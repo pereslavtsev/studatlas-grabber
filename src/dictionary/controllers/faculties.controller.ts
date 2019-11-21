@@ -4,10 +4,13 @@ import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.ex
 import { GetFacultyRequest } from '../interfaces/requests/get-faculty-request.interface';
 import { ListFacultiesRequest } from '../interfaces/requests/list-faculties-request.interface';
 import { FacultiesService } from '../services/faculties.service';
+import { AbstractDictionaryController } from './abstract-dictionary.controller';
 
 @Controller()
-export class FacultiesController {
-  constructor(private readonly facultiesService: FacultiesService) {}
+export class FacultiesController extends AbstractDictionaryController {
+  constructor(private readonly facultiesService: FacultiesService) {
+    super();
+  }
 
   @GrpcMethod('FacultyService', 'GetFaculty')
   async findOne({ id, academyId }: GetFacultyRequest) {

@@ -20,7 +20,6 @@ export class AcademiesController {
   @GrpcMethod('AcademyService', 'ListAcademies')
   async findAll() {
     const academies = await this.academiesService.findAll();
-    console.log(academies);
     return { data: academies };
   }
 }

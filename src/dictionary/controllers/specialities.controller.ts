@@ -7,10 +7,13 @@ import {
   ListSpecialitiesRequest,
 } from '../interfaces/requests/list-specialities-request.interface';
 import { SpecialitiesService } from '../services/specialities.service';
+import { AbstractDictionaryController } from './abstract-dictionary.controller';
 
 @Controller()
-export class SpecialitiesController {
-  constructor(private readonly specialitiesService: SpecialitiesService) {}
+export class SpecialitiesController extends AbstractDictionaryController {
+  constructor(private readonly specialitiesService: SpecialitiesService) {
+    super();
+  }
 
   @GrpcMethod('SpecialityService', 'GetSpeciality')
   async findOne({ id, academyId }: GetSpecialityRequest) {

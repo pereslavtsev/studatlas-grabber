@@ -6,7 +6,7 @@ import { AbstractDictionaryService } from './abstract-dictionary.service';
 
 @Injectable()
 export class FacultiesService extends AbstractDictionaryService {
-  private async fetch(academyId: string, params?: any) {
+  protected async fetch(academyId: string, params?: any) {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
       params: {
@@ -24,9 +24,5 @@ export class FacultiesService extends AbstractDictionaryService {
   async fetchById(id: number, academyId: string) {
     const faculties = await this.fetch(academyId, { id });
     return faculties.pop();
-  }
-
-  fetchAll(academyId: string) {
-    return this.fetch(academyId);
   }
 }

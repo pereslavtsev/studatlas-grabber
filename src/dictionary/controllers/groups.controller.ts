@@ -6,10 +6,13 @@ import { ListFacultyGroupsRequest } from '../interfaces/requests/list-faculty-gr
 import { ListGroupsRequest } from '../interfaces/requests/list-groups-request.interface';
 import { ListSpecialityGroupsRequest } from '../interfaces/requests/list-speciality-groups-request.interface';
 import { GroupsService } from '../services/groups.service';
+import { AbstractDictionaryController } from './abstract-dictionary.controller';
 
 @Controller()
-export class GroupsController {
-  constructor(private readonly groupsService: GroupsService) {}
+export class GroupsController extends AbstractDictionaryController {
+  constructor(private readonly groupsService: GroupsService) {
+    super();
+  }
 
   @GrpcMethod('GroupService', 'GetGroup')
   async findOne({ id, academyId }: GetGroupRequest) {

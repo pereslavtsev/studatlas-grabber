@@ -6,7 +6,7 @@ import { AbstractDictionaryService } from './abstract-dictionary.service';
 
 @Injectable()
 export class DivisionsService extends AbstractDictionaryService {
-  private async fetch(academyId: string, params?: any): Promise<any[]> {
+  protected async fetch(academyId: string, params?: any): Promise<any[]> {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
       params: {
@@ -24,9 +24,5 @@ export class DivisionsService extends AbstractDictionaryService {
       f: DictionaryFilter.Division,
     });
     return divisions.pop();
-  }
-
-  fetchAll(academyId: string) {
-    return this.fetch(academyId);
   }
 }
