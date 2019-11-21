@@ -5,6 +5,7 @@ import * as grpc from 'grpc';
 import * as _ from 'lodash';
 import { Model } from 'mongoose';
 import { GrpcNotFoundException } from '../shared/exceptions/grpc-not-found.exception';
+import { GrpcUnknownException } from '../shared/exceptions/grpc-unknown.exception';
 import { Academy } from './interfaces/academy.interface';
 
 @Injectable()
@@ -37,9 +38,7 @@ export class AcademiesService {
           });
         }
         default: {
-          throw new RpcException({
-            status: grpc.status.UNKNOWN,
-          });
+          throw new GrpcUnknownException();
         }
       }
     }
