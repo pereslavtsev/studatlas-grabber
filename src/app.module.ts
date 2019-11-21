@@ -12,6 +12,7 @@ import { MongooseConfigService } from './shared/services/mongoose-config.service
 import { SharedModule } from './shared/shared.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { TimetablesModule } from './timetables/timetables.module';
+import { WorkloadsModule } from './workloads/workloads.module';
 
 @Module({
   imports: [
@@ -30,8 +31,7 @@ import { TimetablesModule } from './timetables/timetables.module';
     CurriculaModule,
     SchedulesModule,
     TimetablesModule,
+    WorkloadsModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
