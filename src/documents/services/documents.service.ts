@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
 import { SourcesService } from '../../grabber/services/sources.service';
+import { cmb } from '../../grabber/utils/ui.util';
 import { DocumentDetails } from '../classes/document-details.class';
+import { GroupDocumentItem } from '../interfaces/group-document-item.interface';
+import { ListGroupDocumentsRequest } from '../interfaces/requests/list-group-documents-request.interface';
+import { GROUP_DOCUMENT_ITEM_SCHEMA } from '../mocks/group-document-item-schema.mock';
 
 @Injectable()
 export class DocumentsService {
@@ -9,6 +14,25 @@ export class DocumentsService {
     private readonly grabberService: GrabberService,
     private readonly sourcesService: SourcesService,
   ) {}
+
+  async fetchByGroupId({
+    academyId,
+    facultyId,
+    groupId,
+    years,
+    semester,
+  }: ListGroupDocumentsRequest): Promise<GroupDocumentItem[]> {
+    const client = await this.grabberService.create(academyId);
+    const source = await this.sourcesService.findById('documents');
+    const { data } = await client.post(source.path, {
+      [cmb('Facultet')]: facultyId,
+      [cmb('Group')]: groupId,
+      [cmb('Year')]: years,
+      [cmb('Sem')]: semester,
+    });
+    const dataGrid = new DataGrid('table[id*="GridGroup"]', data);
+    return dataGrid.extract(GROUP_DOCUMENT_ITEM_SCHEMA);
+  }
 
   private async fetchOne(academyId: string, params?: any) {
     const client = await this.grabberService.create(academyId);
