@@ -1,14 +1,15 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { AcademiesService } from './academies.service';
-import { GetAcademyRequest } from './interfaces/get-academy-request.interface';
+import { GetAcademyDto } from './dto/get-academy.dto';
 
 @Controller()
 export class AcademiesController {
   constructor(private readonly academiesService: AcademiesService) {}
 
   @GrpcMethod('AcademyService', 'GetAcademy')
-  async findOne({ id }: GetAcademyRequest) {
+  @UsePipes(new ValidationPipe())
+  async findOne({ id }: GetAcademyDto) {
     // tslint:disable-next-line:no-console
     console.log(`Receive an academy by ID "${id}"...`);
     const academy = await this.academiesService.findById(id);
@@ -18,6 +19,7 @@ export class AcademiesController {
   }
 
   @GrpcMethod('AcademyService', 'ListAcademies')
+  @UsePipes(new ValidationPipe())
   async findAll() {
     const academies = await this.academiesService.findAll();
     return { data: academies };

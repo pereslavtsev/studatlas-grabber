@@ -1,19 +1,17 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.exception';
-import { GetFacultyRequest } from '../interfaces/requests/get-faculty-request.interface';
-import { ListFacultiesRequest } from '../interfaces/requests/list-faculties-request.interface';
+import { GetFacultyDto } from '../dto/get-faculty-request.interface';
+import { ListFacultiesDto } from '../dto/list-faculties.dto';
 import { FacultiesService } from '../services/faculties.service';
-import { AbstractDictionaryController } from './abstract-dictionary.controller';
 
 @Controller()
-export class FacultiesController extends AbstractDictionaryController {
-  constructor(private readonly facultiesService: FacultiesService) {
-    super();
-  }
+export class FacultiesController {
+  constructor(private readonly facultiesService: FacultiesService) {}
 
   @GrpcMethod('FacultyService', 'GetFaculty')
-  async findOne({ id, academyId }: GetFacultyRequest) {
+  @UsePipes(new ValidationPipe())
+  async findOne({ id, academyId }: GetFacultyDto) {
     const faculty = await this.facultiesService.fetchById(id, academyId);
     if (!faculty) {
       throw new GrpcNotFoundException('Faculty is not found');
@@ -22,7 +20,8 @@ export class FacultiesController extends AbstractDictionaryController {
   }
 
   @GrpcMethod('FacultyService', 'ListFaculties')
-  async findAll({ academyId }: ListFacultiesRequest) {
+  @UsePipes(new ValidationPipe())
+  async findAll({ academyId }: ListFacultiesDto) {
     const faculties = await this.facultiesService.fetchAll(academyId);
     return { data: faculties };
   }

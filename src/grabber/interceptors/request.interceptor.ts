@@ -11,7 +11,7 @@ const onFulfilled = (disabledSources?: string[]) => async config => {
 
   if (disabledSources && disabledSources.length) {
     const source = SOURCES.find(s => s.path.includes(config.url));
-    if (_.includes(disabledSources, source.id)) {
+    if (!!source && _.includes(disabledSources, source.id)) {
       console.log(1);
     }
   }

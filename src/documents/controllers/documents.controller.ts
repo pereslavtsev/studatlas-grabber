@@ -1,10 +1,8 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { GetDocumentRequest } from '../interfaces/requests/get-document-request.interface';
-import {
-  ListDocumentSaveStories,
-} from '../interfaces/requests/list-document-save-stories.interface';
-import { ListGroupDocumentsRequest } from '../interfaces/requests/list-group-documents-request.interface';
+import { GetDocumentDto } from '../dto/get-document.dto';
+import { ListDocumentSaveStoriesDto } from '../dto/list-document-save-stories.dto';
+import { ListGroupDocumentsDto } from '../dto/list-group-documents.dto';
 import { DocumentsService } from '../services/documents.service';
 import { SaveStoriesService } from '../services/save-stories.service';
 
@@ -16,17 +14,20 @@ export class DocumentsController {
   ) {}
 
   @GrpcMethod('DocumentService', 'GetDocument')
-  findOne({ id, academyId }: GetDocumentRequest) {
+  @UsePipes(new ValidationPipe())
+  findOne({ id, academyId }: GetDocumentDto) {
     return this.documentsService.fetchById(id, academyId);
   }
 
   @GrpcMethod('DocumentService', 'ListGroupDocuments')
-  findByGroupId({ academyId, facultyId, groupId, years, semester }: ListGroupDocumentsRequest) {
+  @UsePipes(new ValidationPipe())
+  findByGroupId({ academyId, facultyId, groupId, years, semester }: ListGroupDocumentsDto) {
     return this.documentsService.fetchByGroupId({ academyId, facultyId, groupId, years, semester });
   }
 
   @GrpcMethod('DocumentService', 'ListDocumentSaveStories')
-  async findHistoryByBookId({ id, academyId }: ListDocumentSaveStories) {
+  @UsePipes(new ValidationPipe())
+  async findHistoryByBookId({ id, academyId }: ListDocumentSaveStoriesDto) {
     const saveStories = await this.saveStoriesService.fetchStoriesByDocumentId(id, academyId);
     return { data: saveStories };
   }

@@ -1,22 +1,18 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.exception';
-import { GetSpecialityRequest } from '../interfaces/requests/get-speciality-request.interface';
-import { ListFacultySpecialitiesRequest } from '../interfaces/requests/list-faculty-specialities-request.interface';
-import {
-  ListSpecialitiesRequest,
-} from '../interfaces/requests/list-specialities-request.interface';
+import { GetSpecialityDto } from '../dto/get-speciality.dto';
+import { ListFacultySpecialitiesDto } from '../dto/list-faculty-specialities.dto';
+import { ListSpecialitiesDto } from '../dto/list-specialities.dto';
 import { SpecialitiesService } from '../services/specialities.service';
-import { AbstractDictionaryController } from './abstract-dictionary.controller';
 
 @Controller()
-export class SpecialitiesController extends AbstractDictionaryController {
-  constructor(private readonly specialitiesService: SpecialitiesService) {
-    super();
-  }
+export class SpecialitiesController {
+  constructor(private readonly specialitiesService: SpecialitiesService) {}
 
   @GrpcMethod('SpecialityService', 'GetSpeciality')
-  async findOne({ id, academyId }: GetSpecialityRequest) {
+  @UsePipes(new ValidationPipe())
+  async findOne({ id, academyId }: GetSpecialityDto) {
     const speciality = await this.specialitiesService.fetchById(id, academyId);
     if (!speciality) {
       throw new GrpcNotFoundException('Speciality is not found');
@@ -25,13 +21,15 @@ export class SpecialitiesController extends AbstractDictionaryController {
   }
 
   @GrpcMethod('SpecialityService', 'ListSpecialities')
-  async findAll({ academyId }: ListSpecialitiesRequest) {
+  @UsePipes(new ValidationPipe())
+  async findAll({ academyId }: ListSpecialitiesDto) {
     const specialities = await this.specialitiesService.fetchAll(academyId);
     return { data: specialities };
   }
 
   @GrpcMethod('SpecialityService', 'ListFacultySpecialities')
-  async findByFacultyId({ facultyId, academyId }: ListFacultySpecialitiesRequest) {
+  @UsePipes(new ValidationPipe())
+  async findByFacultyId({ facultyId, academyId }: ListFacultySpecialitiesDto) {
     const specialities = await this.specialitiesService.fetchByFacultyId(facultyId, academyId);
     return { data: specialities };
   }

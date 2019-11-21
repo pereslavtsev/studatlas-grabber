@@ -1,6 +1,6 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ListFacultySchedulesRequest } from '../interfaces/requests/list-faculty-schedules-request.interface';
+import { ListFacultySchedulesDto } from '../dto/list-faculty-schedules.dto';
 import { SchedulesService } from '../services/schedules.service';
 
 @Controller()
@@ -8,7 +8,8 @@ export class SchedulesController {
   constructor(private readonly schedulesService: SchedulesService) {}
 
   @GrpcMethod('ScheduleService', 'ListFacultySchedules')
-  async findByFacultyId({ academyId, facultyId, years, semester }: ListFacultySchedulesRequest) {
+  @UsePipes(new ValidationPipe())
+  async findByFacultyId({ academyId, facultyId, years, semester }: ListFacultySchedulesDto) {
     const schedules = await this.schedulesService.fetchByFacultyId({
       academyId,
       facultyId,

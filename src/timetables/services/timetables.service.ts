@@ -3,10 +3,10 @@ import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
 import { SourcesService } from '../../grabber/services/sources.service';
 import { cmb, op } from '../../grabber/utils/ui.util';
+import { ListDivisionTimetablesDto } from '../dto/list-division-timetables.dto';
+import { ListFacultyTimetablesDto } from '../dto/list-faculty-timetables.dto';
+import { ListRoomTimetablesDto } from '../dto/list-room-timetables.dto';
 import { TimetablesMode } from '../enums/timetables-mode.enum';
-import { ListDivisionTimetablesRequest } from '../interfaces/requests/list-division-timetables-request.interface';
-import { ListFacultyTimetablesRequest } from '../interfaces/requests/list-faculty-timetables-request.interface';
-import { ListRoomTimetablesRequest } from '../interfaces/requests/list-room-timetables-request.interface';
 import { GROUP_TIMETABLE_ITEM_SCHEMA } from '../mocks/group-timetable-item-schema.mock';
 import { ROOM_TIMETABLE_ITEM_SCHEMA } from '../mocks/room-timetable-item-schema.mock';
 import { TEACHER_TIMETABLE_ITEM_SCHEMA } from '../mocks/teacher-timetable-item-schema.mock';
@@ -26,7 +26,7 @@ export class TimetablesService {
     return client;
   }
 
-  async fetchByFacultyId({ academyId, facultyId, semester, years }: ListFacultyTimetablesRequest) {
+  async fetchByFacultyId({ academyId, facultyId, semester, years }: ListFacultyTimetablesDto) {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
       [op('View')]: TimetablesMode.Groups,
@@ -43,7 +43,7 @@ export class TimetablesService {
     divisionId,
     semester,
     years,
-  }: ListDivisionTimetablesRequest) {
+  }: ListDivisionTimetablesDto) {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
       [op('View')]: TimetablesMode.Teachers,
@@ -55,7 +55,7 @@ export class TimetablesService {
     return dataGrid.extract(TEACHER_TIMETABLE_ITEM_SCHEMA);
   }
 
-  async fetchByRoom({ academyId, semester, years }: ListRoomTimetablesRequest) {
+  async fetchByRoom({ academyId, semester, years }: ListRoomTimetablesDto) {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
       [op('View')]: TimetablesMode.Rooms,

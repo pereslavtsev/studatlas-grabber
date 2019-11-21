@@ -1,14 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { DataGrid } from '../../grabber/classes/data-grid.class';
+import { GrabberService } from '../../grabber/services/grabber.service';
+import { SourcesService } from '../../grabber/services/sources.service';
 import { DictionaryFilter } from '../enums/dictionary-filter.enum';
 import { DIVISION_SCHEMA } from '../mocks/division-schema.mock';
-import { AbstractDictionaryService } from './abstract-dictionary.service';
 
 @Injectable()
-export class DivisionsService extends AbstractDictionaryService {
-  protected async fetch(academyId: string, params?: any): Promise<any[]> {
-    const client = await this.createClient(academyId);
-    const { data } = await client.request({
+export class DivisionsService {
+  constructor(
+    private readonly grabberService: GrabberService,
+    private readonly sourcesService: SourcesService,
+  ) {}
+
+  protected async fetch(academyId: string, params?: any) {
+    const source = await this.sourcesService.findById('dictionary');
+    const client = await this.grabberService.create(academyId);
+    const { data } = await client.get(source.path, {
       params: {
         mode: DictionaryFilter.Division,
         ...params,
@@ -24,5 +31,9 @@ export class DivisionsService extends AbstractDictionaryService {
       f: DictionaryFilter.Division,
     });
     return divisions.pop();
+  }
+
+  fetchAll(academyId: string) {
+    return this.fetch(academyId);
   }
 }

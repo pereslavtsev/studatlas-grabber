@@ -1,8 +1,8 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ListDivisionTimetablesRequest } from '../interfaces/requests/list-division-timetables-request.interface';
-import { ListFacultyTimetablesRequest } from '../interfaces/requests/list-faculty-timetables-request.interface';
-import { ListRoomTimetablesRequest } from '../interfaces/requests/list-room-timetables-request.interface';
+import { ListDivisionTimetablesDto } from '../dto/list-division-timetables.dto';
+import { ListFacultyTimetablesDto } from '../dto/list-faculty-timetables.dto';
+import { ListRoomTimetablesDto } from '../dto/list-room-timetables.dto';
 import { TimetablesService } from '../services/timetables.service';
 
 @Controller()
@@ -10,7 +10,8 @@ export class TimetablesController {
   constructor(private readonly timetablesService: TimetablesService) {}
 
   @GrpcMethod('TimetableService', 'ListFacultyTimetables')
-  async findByFacultyId({ academyId, facultyId, years, semester }: ListFacultyTimetablesRequest) {
+  @UsePipes(new ValidationPipe())
+  async findByFacultyId({ academyId, facultyId, years, semester }: ListFacultyTimetablesDto) {
     const timetables = await this.timetablesService.fetchByFacultyId({
       academyId,
       facultyId,
@@ -21,12 +22,13 @@ export class TimetablesController {
   }
 
   @GrpcMethod('TimetableService', 'ListDivisionTimetables')
+  @UsePipes(new ValidationPipe())
   async findByDivisionId({
     academyId,
     divisionId,
     years,
     semester,
-  }: ListDivisionTimetablesRequest) {
+  }: ListDivisionTimetablesDto) {
     const timetables = await this.timetablesService.fetchByDivisionId({
       academyId,
       divisionId,
@@ -37,7 +39,8 @@ export class TimetablesController {
   }
 
   @GrpcMethod('TimetableService', 'ListRoomTimetables')
-  async findByRoom({ academyId, years, semester }: ListRoomTimetablesRequest) {
+  @UsePipes(new ValidationPipe())
+  async findByRoom({ academyId, years, semester }: ListRoomTimetablesDto) {
     const timetables = await this.timetablesService.fetchByRoom({
       academyId,
       years,

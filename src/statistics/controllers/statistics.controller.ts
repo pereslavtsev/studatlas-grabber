@@ -1,6 +1,6 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ListStatisticsRequest } from '../interfaces/requests/list-statistics-request.interface';
+import { ListStatisticsDto } from '../dto/list-statistics.dto';
 import { StatisticsService } from '../services/statistics.service';
 
 @Controller()
@@ -8,7 +8,8 @@ export class StatisticsController {
   constructor(private readonly statisticsService: StatisticsService) {}
 
   @GrpcMethod('StatisticsService', 'ListDivisionsStatistics')
-  async findByDivisions({ academyId, years, semester }: ListStatisticsRequest) {
+  @UsePipes(new ValidationPipe())
+  async findByDivisions({ academyId, years, semester }: ListStatisticsDto) {
     const statistics = await this.statisticsService.fetchByDivisions({
       years,
       semester,
@@ -18,7 +19,8 @@ export class StatisticsController {
   }
 
   @GrpcMethod('StatisticsService', 'ListFacultiesStatistics')
-  async findByFaculties({ academyId, years, semester }: ListStatisticsRequest) {
+  @UsePipes(new ValidationPipe())
+  async findByFaculties({ academyId, years, semester }: ListStatisticsDto) {
     const statistics = await this.statisticsService.fetchByFaculties({
       years,
       semester,
