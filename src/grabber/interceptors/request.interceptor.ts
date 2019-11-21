@@ -4,14 +4,16 @@ import { VIEW_STATE } from '../constants/params.constants';
 import { transformData } from '../helpers/transform-data.helper';
 import { SOURCES } from '../mocks/sources.mock';
 
-const onFulfilled = (disabledSources: string[]) => async config => {
+const onFulfilled = (disabledSources?: string[]) => async config => {
   /** In dev, intercepts request and logs it into console for dev */
   // tslint:disable-next-line:no-console
   // console.info(config);
 
-  const source = SOURCES.find(s => s.path.includes(config.url));
-  if (_.includes(disabledSources, source.id)) {
-    console.log(1);
+  if (disabledSources && disabledSources.length) {
+    const source = SOURCES.find(s => s.path.includes(config.url));
+    if (_.includes(disabledSources, source.id)) {
+      console.log(1);
+    }
   }
 
   switch (config.method) {
