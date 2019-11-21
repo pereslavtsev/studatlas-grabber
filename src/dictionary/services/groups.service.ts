@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { RpcException } from '@nestjs/microservices';
 import * as cheerio from 'cheerio';
-import * as grpc from 'grpc';
 import { DataGrid } from '../../grabber/classes/data-grid.class';
+import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.exception';
 import { DictionaryFilter } from '../enums/dictionary-filter.enum';
 import { GROUP_SCHEMA } from '../mocks/group-schema.mock';
 import { AbstractDictionaryService } from './abstract-dictionary.service';
@@ -28,10 +27,7 @@ export class GroupsService extends AbstractDictionaryService {
             // Проверяет, есть ли такой факультет
             const isFacultyExists = !!pageTitle.match('Группы факультета \\D+');
             if (!isFacultyExists) {
-              throw new RpcException({
-                status: grpc.status.NOT_FOUND,
-                message: 'Faculty is not found',
-              });
+              throw new GrpcNotFoundException('Faculty is not found');
             }
             break;
           }
@@ -39,10 +35,7 @@ export class GroupsService extends AbstractDictionaryService {
             // Проверяет, есть ли такая специальность
             const isSpecialityExists = !!pageTitle.match('Группы специальности \\S+');
             if (!isSpecialityExists) {
-              throw new RpcException({
-                status: grpc.status.NOT_FOUND,
-                message: 'Speciality is not found',
-              });
+              throw new GrpcNotFoundException('Speciality is not found');
             }
             break;
           }

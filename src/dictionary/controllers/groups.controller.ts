@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
-import { GrpcMethod, RpcException } from '@nestjs/microservices';
-import * as grpc from 'grpc';
+import { GrpcMethod } from '@nestjs/microservices';
+import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.exception';
 import { GetGroupRequest } from '../interfaces/requests/get-group-request.interface';
 import { ListFacultyGroupsRequest } from '../interfaces/requests/list-faculty-groups-request.interface';
 import { ListGroupsRequest } from '../interfaces/requests/list-groups-request.interface';
@@ -15,10 +15,7 @@ export class GroupsController {
   async findOne({ id, academyId }: GetGroupRequest) {
     const group = await this.groupsService.fetchById(id, academyId);
     if (!group) {
-      throw new RpcException({
-        code: grpc.status.NOT_FOUND,
-        message: 'Group is not found',
-      });
+      throw new GrpcNotFoundException('Group is not found');
     }
     return { data: [group] };
   }

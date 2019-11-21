@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
-import { GrpcMethod, RpcException } from '@nestjs/microservices';
-import * as grpc from 'grpc';
+import { GrpcMethod } from '@nestjs/microservices';
+import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.exception';
 import { GetDivisionRequest } from '../interfaces/requests/get-division-request.interface';
 import { ListDivisionsRequest } from '../interfaces/requests/list-divisions-request.interface';
 import { DivisionsService } from '../services/divisions.service';
@@ -13,10 +13,7 @@ export class DivisionsController {
   async findOne({ id, academyId }: GetDivisionRequest) {
     const division = await this.divisionsService.fetchById(id, academyId);
     if (!division) {
-      throw new RpcException({
-        code: grpc.status.NOT_FOUND,
-        message: 'Division is not found',
-      });
+      throw new GrpcNotFoundException('Division is not found');
     }
     return { data: [division] };
   }

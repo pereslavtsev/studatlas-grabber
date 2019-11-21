@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
-import { GrpcMethod, RpcException } from '@nestjs/microservices';
-import * as grpc from 'grpc';
+import { GrpcMethod } from '@nestjs/microservices';
+import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.exception';
 import { GetFacultyRequest } from '../interfaces/requests/get-faculty-request.interface';
 import { ListFacultiesRequest } from '../interfaces/requests/list-faculties-request.interface';
 import { FacultiesService } from '../services/faculties.service';
@@ -13,10 +13,7 @@ export class FacultiesController {
   async findOne({ id, academyId }: GetFacultyRequest) {
     const faculty = await this.facultiesService.fetchById(id, academyId);
     if (!faculty) {
-      throw new RpcException({
-        code: grpc.status.NOT_FOUND,
-        message: 'Faculty is not found',
-      });
+      throw new GrpcNotFoundException('Faculty is not found');
     }
     return { data: [faculty] };
   }

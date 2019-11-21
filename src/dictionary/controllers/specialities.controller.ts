@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
-import { GrpcMethod, RpcException } from '@nestjs/microservices';
-import * as grpc from 'grpc';
+import { GrpcMethod } from '@nestjs/microservices';
+import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.exception';
 import { GetSpecialityRequest } from '../interfaces/requests/get-speciality-request.interface';
 import { ListFacultySpecialitiesRequest } from '../interfaces/requests/list-faculty-specialities-request.interface';
 import {
@@ -16,10 +16,7 @@ export class SpecialitiesController {
   async findOne({ id, academyId }: GetSpecialityRequest) {
     const speciality = await this.specialitiesService.fetchById(id, academyId);
     if (!speciality) {
-      throw new RpcException({
-        code: grpc.status.NOT_FOUND,
-        message: 'Speciality is not found',
-      });
+      throw new GrpcNotFoundException('Speciality is not found');
     }
     return { data: [speciality] };
   }

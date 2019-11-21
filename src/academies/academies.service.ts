@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as grpc from 'grpc';
 import * as _ from 'lodash';
 import { Model } from 'mongoose';
+import { GrpcNotFoundException } from '../shared/exceptions/grpc-not-found.exception';
 import { Academy } from './interfaces/academy.interface';
 
 @Injectable()
@@ -43,10 +44,7 @@ export class AcademiesService {
       }
     }
     if (!academy) {
-      throw new RpcException({
-        status: grpc.status.NOT_FOUND,
-        message: 'Academy is not found',
-      });
+      throw new GrpcNotFoundException('Academy is not found');
     }
     return _.pick(academy, this.academyFields) as Academy;
   }
