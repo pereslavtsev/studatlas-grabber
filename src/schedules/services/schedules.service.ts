@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { DataGrid } from '../grabber/classes/data-grid.class';
-import { GrabberService } from '../grabber/services/grabber.service';
-import { SourcesService } from '../grabber/services/sources.service';
-import { cmb } from '../grabber/utils/ui.util';
-import { ListFacultySchedulesRequest } from './interfaces/requests/list-faculty-schedules-request.interface';
-import { SCHEDULE_ITEM_SCHEMA } from './mocks/schedule-item-schema.mock';
+import { DataGrid } from '../../grabber/classes/data-grid.class';
+import { GrabberService } from '../../grabber/services/grabber.service';
+import { SourcesService } from '../../grabber/services/sources.service';
+import { cmb } from '../../grabber/utils/ui.util';
+import { ListFacultySchedulesRequest } from '../interfaces/requests/list-faculty-schedules-request.interface';
+import { SCHEDULE_ITEM_SCHEMA } from '../mocks/schedule-item-schema.mock';
 
 @Injectable()
 export class SchedulesService {

@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ListFacultySchedulesRequest } from './interfaces/requests/list-faculty-schedules-request.interface';
-import { SchedulesService } from './schedules.service';
+import { ListFacultySchedulesRequest } from '../interfaces/requests/list-faculty-schedules-request.interface';
+import { SchedulesService } from '../services/schedules.service';
 
 @Controller()
 export class SchedulesController {
