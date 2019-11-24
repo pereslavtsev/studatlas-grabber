@@ -11,5 +11,7 @@ import "./report.proto";
 import "./schedule.proto";
 import "./speciality.proto";
 import "./statistics.proto";
+import "./timetable.proto";
+import "./workload.proto";
 
 package grabber;

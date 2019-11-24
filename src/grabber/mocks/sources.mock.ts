@@ -13,6 +13,10 @@ export const SOURCES: Source[] = [
     path: `/Ved/Ved${FILE_EXT}`,
   },
   {
+    id: 'documents',
+    path: `/Ved/${INDEX_PAGE}`,
+  },
+  {
     id: 'save_stories',
     path: `/Ved/StorySave${FILE_EXT}`,
   },
@@ -35,5 +39,13 @@ export const SOURCES: Source[] = [
   {
     id: 'schedules',
     path: `/Graph/${INDEX_PAGE}`,
+  },
+  {
+    id: 'timetables',
+    path: `/Rasp/${INDEX_PAGE}`,
+  },
+  {
+    id: 'workloads',
+    path: `/Nagr/${INDEX_PAGE}`,
   },
 ];

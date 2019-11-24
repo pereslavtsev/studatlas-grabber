@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DocumentsController } from './documents.controller';
+import { DocumentsController } from './controllers/documents.controller';
 import { DocumentsService } from './services/documents.service';
 import { SaveStoriesService } from './services/save-stories.service';
 
