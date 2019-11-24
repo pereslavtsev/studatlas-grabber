@@ -2,12 +2,16 @@ syntax = "proto3";
 
 import "./academy.proto";
 import "./book.proto";
+import "./curricula.proto";
 import "./document.proto";
 import "./division.proto";
 import "./faculty.proto";
 import "./group.proto";
 import "./report.proto";
+import "./schedule.proto";
 import "./speciality.proto";
 import "./statistics.proto";
+import "./timetable.proto";
+import "./workload.proto";
 
 package grabber;

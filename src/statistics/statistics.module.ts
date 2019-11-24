@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { StatisticsController } from './statistics.controller';
-import { StatisticsService } from './statistics.service';
+import { DebtorsController } from './controllers/debtors.controller';
+import { StatisticsController } from './controllers/statistics.controller';
+import { DebtorsService } from './services/debtors.service';
+import { StatisticsService } from './services/statistics.service';
 
 @Module({
-  providers: [StatisticsService],
-  controllers: [StatisticsController],
-  exports: [StatisticsService],
+  providers: [StatisticsService, DebtorsService],
+  controllers: [StatisticsController, DebtorsController],
+  exports: [StatisticsService, DebtorsService],
 })
 export class StatisticsModule {}

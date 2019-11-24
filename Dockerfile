@@ -14,5 +14,3 @@ COPY . /usr/src/app/
 RUN yarn build
 
 ENTRYPOINT ["yarn", "start:prod"]
-
-EXPOSE 5000

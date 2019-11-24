@@ -16,6 +16,7 @@ message Academy {
     string endpoint = 6;
     string version = 7;
     repeated string disabledSources = 8;
+    int32 isDisabled = 9;
 }
 
 message GetAcademyRequest {

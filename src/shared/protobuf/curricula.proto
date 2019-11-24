@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package grabber;
+
+service CurriculaService {
+    rpc ListFacultyCurricula (ListFacultyCurriculaRequest) returns (ListCurriculaResponse) {}
+}
+
+message Curricula {
+    int32 id = 1;
+    string name = 2;
+    string speciality = 3;
+}
+
+message ListFacultyCurriculaRequest {
+    string academy_id = 1;
+    int32 faculty_id = 2;
+    string years = 3;
+}
+
+message ListCurriculaResponse {
+    repeated Curricula data = 1;
+}
+
+
