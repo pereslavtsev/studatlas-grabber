@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package grabber;
+
+service TimetableService {
+    rpc ListFacultyTimetables (ListFacultyTimetablesRequest) returns (ListFacultyTimetablesResponse) {}
+    rpc ListDivisionTimetables (ListDivisionTimetablesRequest) returns (ListDivisionTimetablesResponse) {}
+    rpc ListRoomTimetables (ListRoomTimetablesRequest) returns (ListRoomTimetablesResponse) {}
+}
+
+message GroupTimetableItem {
+    int32 year = 1;
+    string group = 2;
+    int32 groupId = 3;
+    string speciality = 4;
+}
+
+message ListFacultyTimetablesRequest {
+    string academy_id = 1;
+    int32 faculty_id = 2;
+    string years = 3;
+    int32 semester = 4;
+}
+
+message ListFacultyTimetablesResponse {
+    repeated GroupTimetableItem data = 1;
+}
+
+// division
+
+message TeacherTimetableItem {
+    string teacher = 1;
+    string teacherQuery = 2;
+}
+
+message ListDivisionTimetablesRequest {
+    string academy_id = 1;
+    int32 division_id = 2;
+    string years = 3;
+    int32 semester = 4;
+}
+
+message ListDivisionTimetablesResponse {
+    repeated TeacherTimetableItem data = 1;
+}
+
+// room
+
+message RoomTimetableItem {
+    string room = 1;
+    string roomQuery = 2;
+}
+
+message ListRoomTimetablesRequest {
+    string academy_id = 1;
+    string years = 3;
+    int32 semester = 4;
+}
+
+message ListRoomTimetablesResponse {
+    repeated RoomTimetableItem data = 1;
+}
+

@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package grabber;
+
+service ScheduleService {
+    rpc ListFacultySchedules (ListFacultyScheduleRequest) returns (ListScheduleResponse) {}
+}
+
+message Schedule {
+    int32 year = 1;
+    string group = 2;
+    int32 groupId = 3;
+    string curriculum = 4;
+}
+
+message ListFacultyScheduleRequest {
+    string academy_id = 1;
+    int32 faculty_id = 2;
+    string years = 3;
+    int32 semester = 4;
+}
+
+message ListScheduleResponse {
+    repeated Schedule data = 1;
+}
