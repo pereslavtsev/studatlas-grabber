@@ -5,5 +5,7 @@ export interface Academy {
   abbreviation: string;
   website: string;
   endpoint: string;
-  version?: string;
+  version: string;
+  disabledSources: string[];
+  isDisabled: boolean;
 }

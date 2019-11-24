@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ListGroupsDebtorsStatisticsRequest } from '../interfaces/requests/list-groups-debtors-statistics-request.interface';
-import { ListTeachersDebtorsStatisticsRequest } from '../interfaces/requests/list-teachers-debtors-statistics-request.interface';
+import { ListGroupsDebtorsStatisticsDto } from '../dto/list-groups-debtors-statistics.dto';
+import { ListTeachersDebtorsStatisticsDto } from '../dto/list-teachers-debtors-statistics.dto';
 import { DebtorsService } from '../services/debtors.service';
 import { StatisticsService } from '../services/statistics.service';
 
@@ -10,12 +10,13 @@ export class DebtorsController {
   constructor(private readonly debtorsService: DebtorsService) {}
 
   @GrpcMethod('StatisticsService', 'ListGroupsDebtors')
+  @UsePipes(new ValidationPipe())
   async findByGroups({
     academyId,
     years,
     semester,
     facultyId,
-  }: ListGroupsDebtorsStatisticsRequest) {
+  }: ListGroupsDebtorsStatisticsDto) {
     const statistics = await this.debtorsService.fetchByGroups({
       academyId,
       years,
@@ -26,13 +27,14 @@ export class DebtorsController {
   }
 
   @GrpcMethod('StatisticsService', 'ListTeachersDebtors')
+  @UsePipes(new ValidationPipe())
   async findByTeachers({
     academyId,
     years,
     semester,
     facultyId,
     divisionId,
-  }: ListTeachersDebtorsStatisticsRequest) {
+  }: ListTeachersDebtorsStatisticsDto) {
     const statistics = await this.debtorsService.fetchByTeachers({
       academyId,
       years,

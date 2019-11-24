@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ListBookEntriesRequest } from './interfaces/requests/list-book-entries-request.interface';
-import { ListGroupBooksRequest } from './interfaces/requests/list-group-books-request.interface';
+import { ListBookEntriesDto } from './dto/list-book-entries.dto';
+import { ListGroupBooksDto } from './dto/list-group-books.dto';
 import { BooksService } from './services/books.service';
 import { EntriesService } from './services/entries.service';
 
@@ -13,14 +13,16 @@ export class BooksController {
   ) {}
 
   @GrpcMethod('BookService', 'ListGroupBooks')
-  async findByGroupId({ groupId, academyId }: ListGroupBooksRequest) {
+  @UsePipes(new ValidationPipe())
+  async findByGroupId({ groupId, academyId }: ListGroupBooksDto) {
     const books = await this.booksService.fetchByGroupId(groupId, academyId);
     // TODO: relations
     return { data: books };
   }
 
   @GrpcMethod('BookService', 'ListBookEntries')
-  async findEntries({ id, semester, academyId }: ListBookEntriesRequest) {
+  @UsePipes(new ValidationPipe())
+  async findEntries({ id, semester, academyId }: ListBookEntriesDto) {
     const entries = await this.entriesService.fetchByBookId(
       id,
       semester,

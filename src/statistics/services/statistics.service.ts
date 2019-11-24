@@ -3,7 +3,7 @@ import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
 import { SourcesService } from '../../grabber/services/sources.service';
 import { cmb } from '../../grabber/utils/ui.util';
-import { ListStatisticsRequest } from '../interfaces/requests/list-statistics-request.interface';
+import { ListStatisticsDto } from '../dto/list-statistics.dto';
 import { Statistics } from '../interfaces/statistics.interface';
 import { STATISTICS_SCHEMA } from '../mocks/statistics-schema.mock';
 
@@ -15,7 +15,7 @@ export class StatisticsService {
   ) {}
 
   private async fetch(
-    { academyId, years, semester }: ListStatisticsRequest,
+    { academyId, years, semester }: ListStatisticsDto,
     mode: string,
   ): Promise<Statistics[]> {
     const statisticsSource = await this.sourcesService.findById('statistics');
@@ -37,7 +37,7 @@ export class StatisticsService {
   }
 
   protected fetchAll(
-    { academyId, semester, years }: ListStatisticsRequest,
+    { academyId, semester, years }: ListStatisticsDto,
     mode: string,
   ) {
     let statMode;
@@ -56,7 +56,7 @@ export class StatisticsService {
     academyId,
     semester,
     years,
-  }: ListStatisticsRequest) {
+  }: ListStatisticsDto) {
     return await this.fetchAll(
       {
         academyId,
@@ -71,7 +71,7 @@ export class StatisticsService {
     academyId,
     semester,
     years,
-  }: ListStatisticsRequest) {
+  }: ListStatisticsDto) {
     return this.fetchAll(
       {
         academyId,

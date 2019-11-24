@@ -3,9 +3,9 @@ import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
 import { SourcesService } from '../../grabber/services/sources.service';
 import { cmb, op } from '../../grabber/utils/ui.util';
+import { ListGroupsDebtorsStatisticsDto } from '../dto/list-groups-debtors-statistics.dto';
+import { ListTeachersDebtorsStatisticsDto } from '../dto/list-teachers-debtors-statistics.dto';
 import { GroupDebtorsStatistics } from '../interfaces/group-debtors-statistics.interface';
-import { ListGroupsDebtorsStatisticsRequest } from '../interfaces/requests/list-groups-debtors-statistics-request.interface';
-import { ListTeachersDebtorsStatisticsRequest } from '../interfaces/requests/list-teachers-debtors-statistics-request.interface';
 import { TeacherDebtorsStatistics } from '../interfaces/teacher-debtors-statistics.interface';
 import { GROUP_DEBTORS_STATISTICS_SCHEMA } from '../mocks/group-debtors-statistics-schema.mock';
 import { TEACHER_DEBTORS_STATISTICS_SCHEMA } from '../mocks/teacher-debtors-statistics-schema.mock';
@@ -30,7 +30,7 @@ export class DebtorsService {
     facultyId,
     years,
     semester,
-  }: ListGroupsDebtorsStatisticsRequest): Promise<GroupDebtorsStatistics[]> {
+  }: ListGroupsDebtorsStatisticsDto): Promise<GroupDebtorsStatistics[]> {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
       data: {
@@ -51,7 +51,7 @@ export class DebtorsService {
     years,
     semester,
     divisionId,
-  }: ListTeachersDebtorsStatisticsRequest): Promise<TeacherDebtorsStatistics[]> {
+  }: ListTeachersDebtorsStatisticsDto): Promise<TeacherDebtorsStatistics[]> {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
       data: {
