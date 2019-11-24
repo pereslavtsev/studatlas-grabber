@@ -44,4 +44,8 @@ export const SOURCES: Source[] = [
     id: 'timetables',
     path: `/Rasp/${INDEX_PAGE}`,
   },
+  {
+    id: 'workloads',
+    path: `/Nagr/${INDEX_PAGE}`,
+  },
 ];
