@@ -41,6 +41,10 @@ export const SOURCES: Source[] = [
     path: `/Graph/${INDEX_PAGE}`,
   },
   {
+    id: 'schedule',
+    path: `/Graph/Graph${FILE_EXT}`,
+  },
+  {
     id: 'timetables',
     path: `/Rasp/${INDEX_PAGE}`,
   },
