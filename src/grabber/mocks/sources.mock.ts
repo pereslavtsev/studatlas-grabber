@@ -48,4 +48,8 @@ export const SOURCES: Source[] = [
     id: 'workloads',
     path: `/Nagr/${INDEX_PAGE}`,
   },
+  {
+    id: 'workload',
+    path: `/Nagr/Nagr${FILE_EXT}`,
+  },
 ];
