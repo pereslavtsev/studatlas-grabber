@@ -3,9 +3,9 @@ import { RpcException } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import * as grpc from 'grpc';
 import { Model } from 'mongoose';
-import { GrpcNotFoundException } from '../shared/exceptions/grpc-not-found.exception';
-import { GrpcUnknownException } from '../shared/exceptions/grpc-unknown.exception';
-import { Academy } from './interfaces/academy.interface';
+import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.exception';
+import { GrpcUnknownException } from '../../shared/exceptions/grpc-unknown.exception';
+import { Academy } from '../interfaces/academy.interface';
 
 @Injectable()
 export class AcademiesService {

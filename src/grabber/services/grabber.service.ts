@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosRequestConfig } from 'axios';
-import { AcademiesService } from '../../academies/academies.service';
+import { AcademiesService } from '../../academies/services/academies.service';
 import { GrpcUnknownException } from '../../shared/exceptions/grpc-unknown.exception';
 import { transformRequest } from '../helpers/transform-request.helper';
 import { transformResponse } from '../helpers/transform-response.helper';

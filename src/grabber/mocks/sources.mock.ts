@@ -1,7 +1,5 @@
+import { FILE_EXT, INDEX_PAGE } from '../grabber.constants';
 import { Source } from '../interfaces/source.interface';
-
-export const FILE_EXT = '.aspx';
-export const INDEX_PAGE = `Default${FILE_EXT}`;
 
 export const SOURCES: Source[] = [
   {

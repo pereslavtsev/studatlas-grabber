@@ -1,9 +1,9 @@
 import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ListBookEntriesDto } from './dto/list-book-entries.dto';
-import { ListGroupBooksDto } from './dto/list-group-books.dto';
-import { BooksService } from './services/books.service';
-import { EntriesService } from './services/entries.service';
+import { ListBookEntriesDto } from '../dto/list-book-entries.dto';
+import { ListGroupBooksDto } from '../dto/list-group-books.dto';
+import { BooksService } from '../services/books.service';
+import { EntriesService } from '../services/entries.service';
 
 @Controller()
 export class BooksController {

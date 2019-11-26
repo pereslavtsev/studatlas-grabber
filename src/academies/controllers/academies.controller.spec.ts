@@ -1,8 +1,8 @@
 import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AcademySchema } from '../schemas/academy.schema';
+import { AcademiesService } from '../services/academies.service';
 import { AcademiesController } from './academies.controller';
-import { AcademiesService } from './academies.service';
-import { AcademySchema } from './schemas/academy.schema';
 
 describe('Academies Controller', () => {
   let controller: AcademiesController;

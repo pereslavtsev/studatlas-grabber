@@ -4,6 +4,7 @@ import { GrabberService } from '../../grabber/services/grabber.service';
 import { SourcesService } from '../../grabber/services/sources.service';
 import { cmb } from '../../grabber/utils/ui.util';
 import { ListFacultySchedulesDto } from '../dto/list-faculty-schedules.dto';
+import { ScheduleItem } from '../interfaces/schedule-item.interface';
 import { SCHEDULE_ITEM_SCHEMA } from '../mocks/schedule-item-schema.mock';
 
 @Injectable()
@@ -13,7 +14,12 @@ export class SchedulesService {
     private readonly sourcesService: SourcesService,
   ) {}
 
-  private async fetch({ academyId, facultyId, semester, years }: ListFacultySchedulesDto) {
+  private async fetch({
+    academyId,
+    facultyId,
+    semester,
+    years,
+  }: ListFacultySchedulesDto): Promise<ScheduleItem[]> {
     const client = await this.grabberService.create(academyId);
     const source = await this.sourcesService.findById('schedules');
     const { data } = await client.post(source.path, {
