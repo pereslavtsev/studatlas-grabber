@@ -586,6 +586,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/entities@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@types/entities/-/entities-1.1.1.tgz#e0c3b389a71fe69c16758c46794f2093e815f2fb"
+  integrity sha512-AzDUBVcEyr5wDj/eSM/yzte5QtUumYRg66L6vApwsGLuDerYD2spTNI73NaRWbJ3x59L+1z7OugRG8pdeOCOrw==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"

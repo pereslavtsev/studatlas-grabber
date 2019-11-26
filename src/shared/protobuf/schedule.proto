@@ -3,10 +3,13 @@ syntax = "proto3";
 package grabber;
 
 service ScheduleService {
+    rpc GetGroupSchedule (GetGroupScheduleRequest) returns (GetGroupScheduleResponse) {}
     rpc ListFacultySchedules (ListFacultyScheduleRequest) returns (ListScheduleResponse) {}
 }
 
-message Schedule {
+// schedule item
+
+message ScheduleItem {
     int32 year = 1;
     string group = 2;
     int32 groupId = 3;
@@ -21,5 +24,41 @@ message ListFacultyScheduleRequest {
 }
 
 message ListScheduleResponse {
+    repeated ScheduleItem data = 1;
+}
+
+// schedule
+
+message Schedule {
+    string faculty = 1;
+    string group = 2;
+    int32 year = 3;
+    string years = 4;
+    string semesterName = 5;
+    string speciality = 6;
+    string profile = 7;
+    message Entry {
+        int32 order = 1;
+        string subject = 2;
+        int32 documentId = 3;
+        string controlType = 4;
+        string unit = 5;
+        int32 hours = 6;
+        repeated string credits = 7;
+        repeated string exams = 8;
+        repeated string teachers = 9;
+        string division = 10;
+        int32 divisionId = 11;
+    }
+    repeated Entry entries = 8;
+}
+
+message GetGroupScheduleRequest {
+    string academy_id = 1;
+    int32 group_id = 2;
+    int32 semester = 3;
+}
+
+message GetGroupScheduleResponse {
     repeated Schedule data = 1;
 }
