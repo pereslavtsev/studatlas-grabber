@@ -25,6 +25,7 @@ const onFulfilled = (disabledSources?: string[]) => async config => {
       // доп. запрос для получения токенов и корректировки параметров запроса
       const { data } = await axios.get(config.url, {
         baseURL: config.baseURL,
+        params: config.params,
       });
 
       config.data = transformData(data, config.data);
