@@ -29,7 +29,7 @@ export class GrabberService {
 
     if (!!sourceId) {
       const { path } = await this.sourcesService.findById(sourceId);
-      clientConfig.url = path;
+      clientConfig.baseURL = `${clientConfig.baseURL}${path}`;
     }
 
     const client = axios.create(clientConfig);

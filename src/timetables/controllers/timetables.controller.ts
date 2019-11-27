@@ -1,5 +1,6 @@
 import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
+import { GetGroupTimetableDto } from '../dto/get-group-timetable.dto';
 import { ListDivisionTimetablesDto } from '../dto/list-division-timetables.dto';
 import { ListFacultyTimetablesDto } from '../dto/list-faculty-timetables.dto';
 import { ListRoomTimetablesDto } from '../dto/list-room-timetables.dto';
@@ -8,6 +9,19 @@ import { TimetablesService } from '../services/timetables.service';
 @Controller()
 export class TimetablesController {
   constructor(private readonly timetablesService: TimetablesService) {}
+
+  @GrpcMethod('TimetableService', 'GetGroupTimetable')
+  @UsePipes(new ValidationPipe())
+  async findOne({ academyId, groupId, weekday, mode, semester }: GetGroupTimetableDto) {
+    const timetable = await this.timetablesService.fetchByGroupId({
+      academyId,
+      groupId,
+      weekday,
+      mode,
+      semester,
+    });
+    return { data: [timetable] };
+  }
 
   @GrpcMethod('TimetableService', 'ListFacultyTimetables')
   @UsePipes(new ValidationPipe())
@@ -23,12 +37,7 @@ export class TimetablesController {
 
   @GrpcMethod('TimetableService', 'ListDivisionTimetables')
   @UsePipes(new ValidationPipe())
-  async findByDivisionId({
-    academyId,
-    divisionId,
-    years,
-    semester,
-  }: ListDivisionTimetablesDto) {
+  async findByDivisionId({ academyId, divisionId, years, semester }: ListDivisionTimetablesDto) {
     const timetables = await this.timetablesService.fetchByDivisionId({
       academyId,
       divisionId,

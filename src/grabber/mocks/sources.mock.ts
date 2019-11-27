@@ -47,6 +47,10 @@ export const SOURCES: Source[] = [
     path: `/Rasp/${INDEX_PAGE}`,
   },
   {
+    id: 'timetable',
+    path: `/Rasp/Rasp${FILE_EXT}`,
+  },
+  {
     id: 'workloads',
     path: `/Nagr/${INDEX_PAGE}`,
   },

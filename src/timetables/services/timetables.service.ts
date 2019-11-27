@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
 import { cmb, op } from '../../grabber/utils/ui.util';
+import { GetGroupTimetableDto } from '../dto/get-group-timetable.dto';
 import { ListDivisionTimetablesDto } from '../dto/list-division-timetables.dto';
 import { ListFacultyTimetablesDto } from '../dto/list-faculty-timetables.dto';
 import { ListRoomTimetablesDto } from '../dto/list-room-timetables.dto';
@@ -9,10 +10,27 @@ import { TimetablesMode } from '../enums/timetables-mode.enum';
 import { GROUP_TIMETABLE_ITEM_SCHEMA } from '../mocks/group-timetable-item-schema.mock';
 import { ROOM_TIMETABLE_ITEM_SCHEMA } from '../mocks/room-timetable-item-schema.mock';
 import { TEACHER_TIMETABLE_ITEM_SCHEMA } from '../mocks/teacher-timetable-item-schema.mock';
+import { parseGroupTimetable } from '../utils/parse-group-timetable.util';
 
 @Injectable()
 export class TimetablesService {
   constructor(private readonly grabberService: GrabberService) {}
+
+  async fetchByGroupId({ academyId, groupId, semester, mode, weekday }: GetGroupTimetableDto) {
+    const client = await this.grabberService.create(academyId, 'timetable');
+    const { data } = await client.request({
+      method: 'post',
+      params: {
+        group: groupId,
+        sem: semester,
+      },
+      data: {
+        [cmb('DayOfWeek')]: weekday,
+        [cmb('TypeView')]: mode,
+      },
+    });
+    parseGroupTimetable(data);
+  }
 
   private createClient(academyId: string) {
     return this.grabberService.create(academyId, 'timetables');
