@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
-import { SourcesService } from '../../grabber/services/sources.service';
 import { cmb, op } from '../../grabber/utils/ui.util';
 import { ListGroupsDebtorsStatisticsDto } from '../dto/list-groups-debtors-statistics.dto';
 import { ListTeachersDebtorsStatisticsDto } from '../dto/list-teachers-debtors-statistics.dto';
@@ -12,17 +11,10 @@ import { TEACHER_DEBTORS_STATISTICS_SCHEMA } from '../mocks/teacher-debtors-stat
 
 @Injectable()
 export class DebtorsService {
-  constructor(
-    private readonly grabberService: GrabberService,
-    private readonly sourcesService: SourcesService,
-  ) {}
+  constructor(private readonly grabberService: GrabberService) {}
 
-  private async createClient(academyId: string) {
-    const debtStatSource = await this.sourcesService.findById('debtors_statistics');
-    const client = await this.grabberService.create(academyId);
-    client.defaults.url = debtStatSource.path;
-    client.defaults.method = 'POST';
-    return client;
+  private createClient(academyId: string) {
+    return this.grabberService.create(academyId, 'debtors_statistics');
   }
 
   async fetchByGroups({
@@ -33,6 +25,7 @@ export class DebtorsService {
   }: ListGroupsDebtorsStatisticsDto): Promise<GroupDebtorsStatistics[]> {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
+      method: 'post',
       data: {
         [op('View')]: 'Group',
         [cmb('Facultets')]: facultyId,
@@ -54,6 +47,7 @@ export class DebtorsService {
   }: ListTeachersDebtorsStatisticsDto): Promise<TeacherDebtorsStatistics[]> {
     const client = await this.createClient(academyId);
     const { data } = await client.request({
+      method: 'post',
       data: {
         [op('View')]: 'Group',
         [cmb('Facultets')]: facultyId,

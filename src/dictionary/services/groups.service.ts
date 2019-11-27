@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import * as cheerio from 'cheerio';
 import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
-import { SourcesService } from '../../grabber/services/sources.service';
 import { GrpcNotFoundException } from '../../shared/exceptions/grpc-not-found.exception';
 import { DictionaryFilter } from '../enums/dictionary-filter.enum';
 import { Group } from '../interfaces/group.interface';
@@ -10,15 +9,11 @@ import { GROUP_SCHEMA } from '../mocks/group-schema.mock';
 
 @Injectable()
 export class GroupsService {
-  constructor(
-    private readonly grabberService: GrabberService,
-    private readonly sourcesService: SourcesService,
-  ) {}
+  constructor(private readonly grabberService: GrabberService) {}
 
   protected async fetch(academyId: string, params?: any): Promise<Group[]> {
-    const source = await this.sourcesService.findById('dictionary');
-    const client = await this.grabberService.create(academyId);
-    const { data } = await client.get(source.path, {
+    const client = await this.grabberService.create(academyId, 'dictionary');
+    const { data } = await client.request({
       params: {
         mode: DictionaryFilter.Group,
         ...params,
