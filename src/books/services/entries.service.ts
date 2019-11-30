@@ -9,19 +9,15 @@ export class EntriesService {
   constructor(private readonly grabberService: GrabberService) {}
 
   private async fetch(academyId: string, params?: any): Promise<Entry[]> {
-    const client = await this.grabberService.create(academyId);
-    const { data } = await client.get('/Ved/ZachBooks.aspx', {
+    const client = await this.grabberService.create(academyId, 'books');
+    const { data } = await client.request({
       params,
     });
     const dataGrid = new DataGrid('table[id*="ContentPage_Grid"]', data);
     return dataGrid.extract(ENTRY_SCHEMA);
   }
 
-  fetchByBookId(
-    id: number,
-    semester: number,
-    academyId: string,
-  ): Promise<Entry[]> {
+  fetchByBookId(id: number, semester: number, academyId: string): Promise<Entry[]> {
     return this.fetch(academyId, { id, sem: semester });
   }
 }

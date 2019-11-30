@@ -1,7 +1,7 @@
 import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { AcademiesService } from './academies.service';
-import { GetAcademyDto } from './dto/get-academy.dto';
+import { GetAcademyDto } from '../dto/get-academy.dto';
+import { AcademiesService } from '../services/academies.service';
 
 @Controller()
 export class AcademiesController {

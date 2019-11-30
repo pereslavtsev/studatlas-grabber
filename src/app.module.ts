@@ -10,6 +10,7 @@ import { ReportsModule } from './reports/reports.module';
 import { SchedulesModule } from './schedules/schedules.module';
 import { MongooseConfigService } from './shared/services/mongoose-config.service';
 import { SharedModule } from './shared/shared.module';
+import { modifyConfigName } from './shared/utils/modify-config-name.util';
 import { StatisticsModule } from './statistics/statistics.module';
 import { TimetablesModule } from './timetables/timetables.module';
 import { WorkloadsModule } from './workloads/workloads.module';
@@ -17,7 +18,7 @@ import { WorkloadsModule } from './workloads/workloads.module';
 @Module({
   imports: [
     ConfigModule.load(path.resolve(__dirname, '**/!(*.d).config.{ts,js}'), {
-      modifyConfigName: name => name.replace('.config', ''),
+      modifyConfigName,
     }),
     MongooseModule.forRootAsync({
       useClass: MongooseConfigService,

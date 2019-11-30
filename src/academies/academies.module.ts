@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AcademiesController } from './academies.controller';
-import { AcademiesService } from './academies.service';
+import { AcademiesController } from './controllers/academies.controller';
 import { AcademySchema } from './schemas/academy.schema';
+import { AcademiesService } from './services/academies.service';
 
 @Module({
   imports: [

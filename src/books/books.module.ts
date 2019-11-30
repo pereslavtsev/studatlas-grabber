@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { BooksController } from './books.controller';
+import { BooksController } from './controllers/books.controller';
 import { BooksService } from './services/books.service';
 import { EntriesService } from './services/entries.service';
 
