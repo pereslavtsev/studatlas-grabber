@@ -23,11 +23,12 @@ export class WorkloadsController {
 
   @GrpcMethod('WorkloadService', 'ListGroupsWorkloads')
   @UsePipes(new ValidationPipe())
-  async findByFacultyId({ academyId, facultyId, years }: ListGroupsWorkloadsDto) {
+  async findByFacultyId({ academyId, facultyId, years, page }: ListGroupsWorkloadsDto) {
     const workloads = await this.workloadsService.fetchByFacultyId({
       academyId,
       facultyId,
       years,
+      page,
     });
     return { data: workloads };
   }

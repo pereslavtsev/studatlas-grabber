@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosRequestConfig } from 'axios';
+import { Headers, MimeTypes } from 'http-headers-js';
 import { AcademiesService } from '../../academies/services/academies.service';
-import { GrpcUnknownException } from '../../shared/exceptions/grpc-unknown.exception';
 import { transformRequest } from '../helpers/transform-request.helper';
 import { transformResponse } from '../helpers/transform-response.helper';
 import { requestInterceptor } from '../interceptors/request.interceptor';
+import { responseInterceptor } from '../interceptors/response.interceptor';
 import { SourcesService } from './sources.service';
 
 @Injectable()
@@ -23,7 +24,7 @@ export class GrabberService {
       transformRequest,
       transformResponse,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        [Headers.CONTENT_TYPE]: MimeTypes.Application.X.WWW_FORM_URLENCODED,
       },
     };
 
@@ -33,17 +34,8 @@ export class GrabberService {
     }
 
     const client = axios.create(clientConfig);
-    client.interceptors.request.use(...requestInterceptor(academy.disabledSources));
-    client.interceptors.response.use(
-      response => {
-        return response;
-      },
-      error => {
-        // tslint:disable-next-line:no-console
-        console.log(error);
-        throw new GrpcUnknownException('Unknown error on a remote server');
-      },
-    );
+    client.interceptors.request.use(...requestInterceptor(academy));
+    client.interceptors.response.use(...responseInterceptor);
     return client;
   }
 }

@@ -22,9 +22,8 @@ export class SpecialitiesController {
 
   @GrpcMethod('SpecialityService', 'ListSpecialities')
   @UsePipes(new ValidationPipe())
-  async findAll({ academyId }: ListSpecialitiesDto) {
-    const specialities = await this.specialitiesService.fetchAll(academyId);
-    return { data: specialities };
+  findAll({ academyId }: ListSpecialitiesDto) {
+    return this.specialitiesService.fetchAll(academyId);
   }
 
   @GrpcMethod('SpecialityService', 'ListFacultySpecialities')

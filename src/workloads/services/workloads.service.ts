@@ -40,8 +40,11 @@ export class WorkloadsService {
         [op('View')]: WorkloadsMode.Groups,
         [cmb('Facultets')]: facultyId,
         [cmb('Years')]: years,
+        __CALLBACKID: 'ctl00$MainContent$GridGroup',
+        __CALLBACKPARAM: 'c0:KV|2;[];GB|20;12|PAGERONCLICK3|PN1;',
       },
     });
+    //console.log(data)
     const dataGrid = new DataGrid('table[id*="GridGroup"]', data);
     return dataGrid.extract(GROUP_WORKLOAD_ITEM_SCHEMA);
   }

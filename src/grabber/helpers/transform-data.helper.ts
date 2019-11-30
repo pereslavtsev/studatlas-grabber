@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import * as _ from 'lodash';
+import SPECIAL_PARAMS from '../../grabber/constants/params.constants';
 import { PostData } from '../interfaces/post-data.interface';
 import { TransformedPostData } from '../interfaces/transformed-post-data.interface';
 
@@ -21,6 +22,9 @@ export const transformData = (
     .mapValues('value')
     .value();
   const fixedData = _.mapKeys(data, (value, key) => {
+    if (_.includes(SPECIAL_PARAMS, key)) {
+      return key;
+    }
     // скорректированное имя инпута для текущего сайта
     // без этого фикса никакие POST-запросы не будут проходить
     const fixedDataField = $(`[name*="${key}"]`).attr('name');

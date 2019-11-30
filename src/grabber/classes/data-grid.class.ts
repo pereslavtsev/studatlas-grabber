@@ -47,6 +47,8 @@ export class DataGrid {
         });
     });
 
+    console.log(positions)
+
     const props = schema.attributes.map(attr => attr.name);
 
     return this.rows
