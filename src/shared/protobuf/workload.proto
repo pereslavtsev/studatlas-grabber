@@ -3,8 +3,29 @@ syntax = "proto3";
 package grabber;
 
 service WorkloadService {
+    rpc GetGroupWorkload (GetGroupWorkloadRequest) returns (GetGroupWorkloadResponse) {}
     rpc ListGroupsWorkloads (ListGroupsWorkloadsRequest) returns (ListGroupsWorkloadsResponse) {}
     rpc ListTeachersWorkloads (ListTeachersWorkloadsRequest) returns (ListTeachersWorkloadsResponse) {}
+}
+
+message Workload {
+    string subject = 1;
+    string session = 2;
+    int32 hours = 3;
+    string teacher = 4;
+    string lesionsType = 5;
+    string controlsType = 6;
+}
+
+message GetGroupWorkloadRequest {
+    string academy_id = 1;
+    int32 group_id = 2;
+    string control_type = 3;
+    string session = 4;
+}
+
+message GetGroupWorkloadResponse {
+    repeated Workload data = 1;
 }
 
 // groups
