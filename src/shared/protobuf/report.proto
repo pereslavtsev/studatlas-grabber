@@ -3,10 +3,11 @@ syntax = "proto3";
 package grabber;
 
 service ReportService {
+    rpc GetGroupReport (GetGroupReportRequest) returns (GetGroupReportResponse) {}
     rpc ListFacultyReports (ListFacultyReportsRequest) returns (ListReportsResponse) {}
 }
 
-message Report {
+message ReportItem {
     int32 id = 1;
     string name = 2;
     string year = 3;
@@ -15,6 +16,44 @@ message Report {
     string curricula = 6;
 }
 
+message Report {
+    int32 countAll = 1;
+    message Subject {
+        int32 order = 1;
+        string name = 2;
+        string flag = 3;
+    }
+    repeated Subject subjects = 2;
+    message Entry {
+        string book = 1;
+        int32 bookId = 2;
+        string authority = 3;
+        message Assessment {
+            int32 subject = 1;
+            int32 isDebt = 2;
+            string value = 3;
+        }
+        repeated Assessment assessments = 4;
+        int32 countDebts = 5;
+    }
+    repeated Entry entries = 3;
+}
+
+// group
+
+message GetGroupReportRequest {
+    string academy_id = 1;
+    int32 group_id = 2;
+    int32 semester = 3;
+}
+
+message GetGroupReportResponse {
+    repeated Report data = 1;
+}
+
+
+// faculty
+
 message ListFacultyReportsRequest {
     string academy_id = 1;
     int32 faculty_id = 2;
@@ -22,5 +61,5 @@ message ListFacultyReportsRequest {
 }
 
 message ListReportsResponse {
-    repeated Report data = 1;
+    repeated ReportItem data = 1;
 }

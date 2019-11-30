@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { AcademyVersion } from '../enums/academy-version.enum';
 
 export const AcademySchema = new mongoose.Schema({
   name: String,
@@ -8,7 +9,7 @@ export const AcademySchema = new mongoose.Schema({
   endpoint: String,
   version: {
     type: String,
-    default: 'modern',
+    default: AcademyVersion.Modern,
   },
   disabledSources: [String],
   isDisabled: {

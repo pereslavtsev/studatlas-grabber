@@ -1,7 +1,5 @@
+import { FILE_EXT, INDEX_PAGE } from '../grabber.constants';
 import { Source } from '../interfaces/source.interface';
-
-export const FILE_EXT = '.aspx';
-export const INDEX_PAGE = `Default${FILE_EXT}`;
 
 export const SOURCES: Source[] = [
   {
@@ -41,11 +39,31 @@ export const SOURCES: Source[] = [
     path: `/Graph/${INDEX_PAGE}`,
   },
   {
+    id: 'schedule',
+    path: `/Graph/Graph${FILE_EXT}`,
+  },
+  {
     id: 'timetables',
     path: `/Rasp/${INDEX_PAGE}`,
   },
   {
+    id: 'timetable',
+    path: `/Rasp/Rasp${FILE_EXT}`,
+  },
+  {
     id: 'workloads',
     path: `/Nagr/${INDEX_PAGE}`,
+  },
+  {
+    id: 'workload',
+    path: `/Nagr/Nagr${FILE_EXT}`,
+  },
+  {
+    id: 'reports',
+    path: `/Totals/${INDEX_PAGE}`,
+  },
+  {
+    id: 'report',
+    path: `/Totals/Totals${FILE_EXT}`,
   },
 ];

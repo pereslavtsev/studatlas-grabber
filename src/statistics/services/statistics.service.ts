@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
-import { SourcesService } from '../../grabber/services/sources.service';
 import { cmb } from '../../grabber/utils/ui.util';
 import { ListStatisticsDto } from '../dto/list-statistics.dto';
 import { Statistics } from '../interfaces/statistics.interface';
@@ -9,37 +8,28 @@ import { STATISTICS_SCHEMA } from '../mocks/statistics-schema.mock';
 
 @Injectable()
 export class StatisticsService {
-  constructor(
-    private readonly grabberService: GrabberService,
-    private readonly sourcesService: SourcesService,
-  ) {}
+  constructor(private readonly grabberService: GrabberService) {}
 
   private async fetch(
     { academyId, years, semester }: ListStatisticsDto,
     mode: string,
   ): Promise<Statistics[]> {
-    const statisticsSource = await this.sourcesService.findById('statistics');
-    const client = await this.grabberService.create(academyId);
-    const { data } = await client.post(
-      statisticsSource.path,
-      {
+    const client = await this.grabberService.create(academyId, 'statistics');
+    const { data } = await client.request({
+      method: 'post',
+      data: {
         [cmb('Years')]: years,
         [cmb('Sem')]: semester,
       },
-      {
-        params: {
-          mode,
-        },
+      params: {
+        mode,
       },
-    );
+    });
     const dataGrid = new DataGrid('table[id*="ucStat"]', data);
     return dataGrid.extract(STATISTICS_SCHEMA);
   }
 
-  protected fetchAll(
-    { academyId, semester, years }: ListStatisticsDto,
-    mode: string,
-  ) {
+  protected fetchAll({ academyId, semester, years }: ListStatisticsDto, mode: string) {
     let statMode;
     switch (mode) {
       case 'faculties':
@@ -52,11 +42,7 @@ export class StatisticsService {
     return this.fetch({ academyId, semester, years }, statMode);
   }
 
-  async fetchByDivisions({
-    academyId,
-    semester,
-    years,
-  }: ListStatisticsDto) {
+  async fetchByDivisions({ academyId, semester, years }: ListStatisticsDto) {
     return await this.fetchAll(
       {
         academyId,
@@ -67,11 +53,7 @@ export class StatisticsService {
     );
   }
 
-  async fetchByFaculties({
-    academyId,
-    semester,
-    years,
-  }: ListStatisticsDto) {
+  async fetchByFaculties({ academyId, semester, years }: ListStatisticsDto) {
     return this.fetchAll(
       {
         academyId,

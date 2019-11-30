@@ -1,4 +1,4 @@
-export class Speciality {
+export interface Speciality {
   id: number;
   shortName: string;
   name: string;

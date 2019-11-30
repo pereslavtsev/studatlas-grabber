@@ -1,22 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
-import { SourcesService } from '../../grabber/services/sources.service';
 import { DictionaryFilter } from '../enums/dictionary-filter.enum';
 import { Speciality } from '../interfaces/speciality.interface';
 import { SPECIALITY_SCHEMA } from '../mocks/speciality-schema.mock';
 
 @Injectable()
 export class SpecialitiesService {
-  constructor(
-    private readonly grabberService: GrabberService,
-    private readonly sourcesService: SourcesService,
-  ) {}
+  constructor(private readonly grabberService: GrabberService) {}
 
   protected async fetch(academyId: string, params?: any): Promise<Speciality[]> {
-    const source = await this.sourcesService.findById('dictionary');
-    const client = await this.grabberService.create(academyId);
-    const { data } = await client.get(source.path, {
+    const client = await this.grabberService.create(academyId, 'dictionary');
+    const { data } = await client.request({
       params: {
         mode: DictionaryFilter.Speciality,
         ...params,
