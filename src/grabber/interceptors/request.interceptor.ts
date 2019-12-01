@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as AxiosLogger from 'axios-logger';
 import * as cookie from 'cookie';
 import { Headers } from 'http-headers-js';
 import * as _ from 'lodash';
@@ -11,8 +12,7 @@ import { SOURCES } from '../mocks/sources.mock';
 
 const onFulfilled = ({ disabledSources, version }: Academy) => async config => {
   /** In dev, intercepts request and logs it into console for dev */
-  // tslint:disable-next-line:no-console
-  // console.info(config);
+  AxiosLogger.requestLogger(config);
 
   if (disabledSources && disabledSources.length) {
     const source = SOURCES.find(s => s.path.includes(config.url));
@@ -28,11 +28,13 @@ const onFulfilled = ({ disabledSources, version }: Academy) => async config => {
         break;
       }
       // доп. запрос для получения токенов и корректировки параметров запроса
-      const { data, headers } = await axios.get(config.url, {
+      const helperClient = axios.create({
         baseURL: config.baseURL,
         params: config.params,
         withCredentials: true,
       });
+      helperClient.interceptors.request.use(AxiosLogger.requestLogger);
+      const { data, headers } = await helperClient.get(config.url);
 
       switch (version) {
         case AcademyVersion.Classic: {
@@ -70,8 +72,7 @@ const onFulfilled = ({ disabledSources, version }: Academy) => async config => {
 };
 
 const onRejected = error => {
-  // tslint:disable-next-line:no-console
-  // console.error(error);
+  AxiosLogger.errorLogger(error);
   return Promise.reject(error);
 };
 

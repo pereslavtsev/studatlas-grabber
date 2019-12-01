@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import * as AxiosLogger from 'axios-logger';
 import * as cheerio from 'cheerio';
 import * as _ from 'lodash';
 import { AcademyVersion } from '../../academies/enums/academy-version.enum';
@@ -26,6 +25,7 @@ export class GrabberService {
 
   async create(academyId: string, sourceId?: string) {
     const academy = await this.academiesService.findById(academyId);
+    this.logger.debug(`Создание подключения для вуза: "${academy.name}" (${academy.endpoint}) ...`);
     const clientConfig = createBaseConfig(academy.endpoint);
 
     if (!!sourceId) {
@@ -35,7 +35,6 @@ export class GrabberService {
 
     const client = axios.create(clientConfig);
     client.interceptors.request.use(...requestInterceptor(academy));
-    client.interceptors.request.use(AxiosLogger.requestLogger);
     client.interceptors.response.use(...responseInterceptor);
     return client;
   }
@@ -100,6 +99,10 @@ export class GrabberService {
           ? // tslint:disable-next-line:radix
             pageInfo.match(/\d+/g).map(val => parseInt(val))
           : DEFAULT_PAGE_INFO;
+
+        if (_.isEmpty(pageInfo)) {
+          this.logger.warn('Нет данных о кол-ве страниц, использованы настройки по умолчанию');
+        }
       }
     }
 

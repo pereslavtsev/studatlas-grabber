@@ -5,14 +5,29 @@ import { Schema } from '../../grabber/interfaces/schema.interface';
 
 export class CustomLogger extends Logger {
   table(message: string = '', schema: Schema, entries: object[]) {
-    // super.debug(entries);
     const config = {
       border: getBorderCharacters('norc'),
       columnCount: schema.attributes.length,
       columns: {
-        ...schema.attributes.map(a => ({
-          alignment: a.type === 'numeric' ? 'right' : 'left',
-        })),
+        ...schema.attributes.map(a => {
+          switch (a.type) {
+            case 'id':
+            case 'numeric': {
+              return {
+                alignment: 'right',
+              };
+            }
+            case 'text':
+            default: {
+              return a.name === 'name'
+                ? {
+                    width: 30,
+                    wrapWord: true,
+                  }
+                : {};
+            }
+          }
+        }),
       },
     };
     const data = entries.map(entry => _.values(entry));

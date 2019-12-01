@@ -33,8 +33,6 @@ const onFulfilled = response => {
 };
 
 const onRejected = error => {
-  // tslint:disable-next-line:no-console
-  // console.error(error);
   return Promise.reject(error);
 };
 
