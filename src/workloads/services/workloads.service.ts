@@ -32,21 +32,22 @@ export class WorkloadsService {
     return dataGrid.extract(GROUP_WORKLOAD_SCHEMA).pop();
   }
 
-  async fetchByFacultyId({ academyId, facultyId, years }: ListGroupsWorkloadsDto) {
-    const client = await this.grabberService.create(academyId, 'workloads');
-    const { data } = await client.request({
-      method: 'post',
-      data: {
-        [op('View')]: WorkloadsMode.Groups,
-        [cmb('Facultets')]: facultyId,
-        [cmb('Years')]: years,
-        __CALLBACKID: 'ctl00$MainContent$GridGroup',
-        __CALLBACKPARAM: 'c0:KV|2;[];GB|20;12|PAGERONCLICK3|PN1;',
+  fetchByFacultyId({ academyId, facultyId, years, page }: ListGroupsWorkloadsDto) {
+    return this.grabberService.extractFormDataGrid({
+      academyId,
+      sourceId: 'workloads',
+      requestConfig: {
+        method: 'post',
+        data: {
+          [op('View')]: WorkloadsMode.Groups,
+          [cmb('Facultets')]: facultyId,
+          [cmb('Years')]: years,
+        },
       },
+      name: 'GridGroup',
+      schema: GROUP_WORKLOAD_ITEM_SCHEMA,
+      page,
     });
-    //console.log(data)
-    const dataGrid = new DataGrid('table[id*="GridGroup"]', data);
-    return dataGrid.extract(GROUP_WORKLOAD_ITEM_SCHEMA);
   }
 
   async fetchByDivisionId({ academyId, divisionId, years }: ListTeachersWorkloadsDto) {

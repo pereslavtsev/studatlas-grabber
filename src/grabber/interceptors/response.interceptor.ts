@@ -5,7 +5,7 @@ import { GrpcUnknownException } from '../../shared/exceptions/grpc-unknown.excep
 
 const onFulfilled = response => {
   const contentType = response.headers[Headers.CONTENT_TYPE.toLowerCase()];
-  if (!_.isString(contentType) && contentType.includes(MimeTypes.Text.HTML)) {
+  if (_.isString(contentType) && contentType.includes(MimeTypes.Text.HTML)) {
     return response;
   }
   const regEx = /\/\S+\/*DX\*\/\((.*?)\)$/gm;

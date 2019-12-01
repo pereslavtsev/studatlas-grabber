@@ -30,16 +30,19 @@ message GroupRelationship {
 
 message ListGroupsRequest {
     string academy_id = 1;
+    int32 page = 2;
 }
 
 message ListFacultyGroupsRequest {
     string academy_id = 1;
     int32 faculty_id = 2;
+    int32 page = 3;
 }
 
 message ListSpecialityGroupsRequest {
     string academy_id = 1;
     int32 speciality_id = 2;
+    int32 page = 3;
 }
 
 message ListGroupsResponse {

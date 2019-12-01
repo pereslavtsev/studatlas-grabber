@@ -48,9 +48,7 @@ export const parseGroupTimetable = (data: string) => {
       const hasTime = !(cols.eq(hasDay ? 1 : 0).text().length === 1);
 
       if (weekday === 'Понедельник') {
-          rows
-            .slice(0, i)
-            .map(s => console.log(1, $(s).text()))
+        rows.slice(0, i).map(s => console.log(1, $(s).text()));
       }
 
       if (!hasTime) {

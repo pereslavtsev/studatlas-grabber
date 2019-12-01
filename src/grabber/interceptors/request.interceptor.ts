@@ -57,7 +57,6 @@ const onFulfilled = ({ disabledSources, version }: Academy) => async config => {
       }
 
       config.data = transformData(data, config.data);
-      console.log(config.data)
 
       break;
     }
