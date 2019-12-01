@@ -47,4 +47,5 @@ message ListSpecialityGroupsRequest {
 
 message ListGroupsResponse {
     repeated Group data = 1;
+    Meta meta = 2;
 }

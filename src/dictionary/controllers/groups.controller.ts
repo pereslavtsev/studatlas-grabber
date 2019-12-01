@@ -13,32 +13,29 @@ export class GroupsController {
 
   @GrpcMethod('GroupService', 'GetGroup')
   @UsePipes(new ValidationPipe())
-  async findOne({ id, academyId }: GetGroupDto) {
-    const group = await this.groupsService.fetchById(id, academyId);
-    if (!group) {
+  async findOne(getGroupDto: GetGroupDto) {
+    const response = await this.groupsService.fetchById(getGroupDto);
+    if (!response.data.length) {
       throw new GrpcNotFoundException('Group is not found');
     }
-    return { data: [group] };
+    return response;
   }
 
   @GrpcMethod('GroupService', 'ListFacultyGroups')
   @UsePipes(new ValidationPipe())
-  async findByFacultyId({ academyId, facultyId }: ListFacultyGroupsDto) {
-    const groups = await this.groupsService.fetchByFacultyId(facultyId, academyId);
-    return { data: groups };
+  findByFacultyId(listFacultyGroupsDto: ListFacultyGroupsDto) {
+    return this.groupsService.fetchByFacultyId(listFacultyGroupsDto);
   }
 
   @GrpcMethod('GroupService', 'ListSpecialityGroups')
   @UsePipes(new ValidationPipe())
-  async findBySpecialityId({ academyId, specialityId }: ListSpecialityGroupsDto) {
-    const groups = await this.groupsService.fetchBySpecialityId(specialityId, academyId);
-    return { data: groups };
+  findBySpecialityId(listSpecialityGroupsDto: ListSpecialityGroupsDto) {
+    return this.groupsService.fetchBySpecialityId(listSpecialityGroupsDto);
   }
 
   @GrpcMethod('GroupService', 'ListGroups')
   @UsePipes(new ValidationPipe())
-  async findAll({ academyId }: ListGroupsDto) {
-    const groups = await this.groupsService.fetchAll(academyId);
-    return { data: groups };
+  findAll(listGroupsDto: ListGroupsDto) {
+    return this.groupsService.fetchAll(listGroupsDto);
   }
 }

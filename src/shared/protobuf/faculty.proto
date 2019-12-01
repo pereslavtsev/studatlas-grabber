@@ -29,4 +29,5 @@ message ListFacultiesRequest {
 
 message ListFacultiesResponse {
     repeated Faculty data = 1;
+    Meta meta = 2;
 }

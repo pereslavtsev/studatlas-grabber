@@ -11,18 +11,17 @@ export class DivisionsController {
 
   @GrpcMethod('DivisionService', 'GetDivision')
   @UsePipes(new ValidationPipe())
-  async findOne({ id, academyId }: GetDivisionDto) {
-    const division = await this.divisionsService.fetchById(id, academyId);
-    if (!division) {
+  async findOne(getDivisionDto: GetDivisionDto) {
+    const response = await this.divisionsService.fetchById(getDivisionDto);
+    if (!response.data.length) {
       throw new GrpcNotFoundException('Division is not found');
     }
-    return { data: [division] };
+    return response;
   }
 
   @GrpcMethod('DivisionService', 'ListDivisions')
   @UsePipes(new ValidationPipe())
-  async findAll({ academyId }: ListDivisionsDto) {
-    const divisions = await this.divisionsService.fetchAll(academyId);
-    return { data: divisions };
+  findAll(listDivisionsDto: ListDivisionsDto) {
+    return this.divisionsService.fetchAll(listDivisionsDto);
   }
 }

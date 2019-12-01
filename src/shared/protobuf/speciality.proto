@@ -39,14 +39,5 @@ message ListFacultySpecialitiesRequest {
 
 message ListSpecialitiesResponse {
     repeated Speciality data = 1;
-    message Meta {
-      message Page {
-        int32 page = 1;
-        int32 allPages = 2;
-        int32 limit = 3;
-        int32 total = 4;
-      }
-      Page page = 1;
-    }
     Meta meta = 2;
 }

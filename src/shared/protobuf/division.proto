@@ -29,4 +29,5 @@ message ListDivisionsRequest {
 
 message ListDivisionsResponse {
     repeated Division data = 1;
+    Meta meta = 2;
 }

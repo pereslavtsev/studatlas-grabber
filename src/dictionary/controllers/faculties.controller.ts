@@ -11,18 +11,17 @@ export class FacultiesController {
 
   @GrpcMethod('FacultyService', 'GetFaculty')
   @UsePipes(new ValidationPipe())
-  async findOne({ id, academyId }: GetFacultyDto) {
-    const faculty = await this.facultiesService.fetchById(id, academyId);
-    if (!faculty) {
+  async findOne(getFacultyDto: GetFacultyDto) {
+    const response = await this.facultiesService.fetchById(getFacultyDto);
+    if (!response.data.length) {
       throw new GrpcNotFoundException('Faculty is not found');
     }
-    return { data: [faculty] };
+    return response;
   }
 
   @GrpcMethod('FacultyService', 'ListFaculties')
   @UsePipes(new ValidationPipe())
-  async findAll({ academyId }: ListFacultiesDto) {
-    const faculties = await this.facultiesService.fetchAll(academyId);
-    return { data: faculties };
+  findAll(listFacultiesDto: ListFacultiesDto) {
+    return this.facultiesService.fetchAll(listFacultiesDto);
   }
 }

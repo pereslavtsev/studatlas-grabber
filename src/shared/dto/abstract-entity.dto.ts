@@ -6,5 +6,5 @@ export abstract class AbstractEntityDto {
 
   @IsInt()
   @IsOptional()
-  page?: number;
+  page?: number = 1;
 }
