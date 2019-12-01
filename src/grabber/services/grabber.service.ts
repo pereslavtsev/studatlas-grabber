@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+import * as AxiosLogger from 'axios-logger';
 import * as cheerio from 'cheerio';
 import * as _ from 'lodash';
 import { AcademyVersion } from '../../academies/enums/academy-version.enum';
 import { AcademiesService } from '../../academies/services/academies.service';
+import { CustomLogger } from '../../shared/services/custom-logger.service';
 import { DataGrid } from '../classes/data-grid.class';
 import { CALLBACK_ID, CALLBACK_PARAM } from '../constants/params.constants';
 import { DEFAULT_PAGE_LIMIT } from '../grabber.constants';
@@ -15,6 +17,8 @@ import { SourcesService } from './sources.service';
 
 @Injectable()
 export class GrabberService {
+  private readonly logger = new CustomLogger(GrabberService.name);
+
   constructor(
     private readonly academiesService: AcademiesService,
     private readonly sourcesService: SourcesService,
@@ -31,6 +35,7 @@ export class GrabberService {
 
     const client = axios.create(clientConfig);
     client.interceptors.request.use(...requestInterceptor(academy));
+    client.interceptors.request.use(AxiosLogger.requestLogger);
     client.interceptors.response.use(...responseInterceptor);
     return client;
   }
@@ -51,7 +56,7 @@ export class GrabberService {
     switch (academy.version) {
       case AcademyVersion.Classic: {
         config = requestConfig;
-        if (_.isEmpty(requestConfig.data)) {
+        if (_.isEmpty(requestConfig.data) && page > 1) {
           config = { ...requestConfig, method: 'get' };
         }
         break;
@@ -62,6 +67,7 @@ export class GrabberService {
           page > 1
             ? {
                 ...requestConfig,
+                method: 'post',
                 data: {
                   ...requestConfig.data,
                   [CALLBACK_ID]: name,
@@ -96,6 +102,8 @@ export class GrabberService {
           : DEFAULT_PAGE_INFO;
       }
     }
+
+    this.logger.table('Результат запроса:', schema, entries);
 
     return {
       data: entries,

@@ -23,6 +23,7 @@ export class GroupsService {
       academyId,
       sourceId: 'dictionary',
       requestConfig: {
+        method: 'post',
         params: {
           mode: DictionaryFilter.Group,
           ...params,
