@@ -34,10 +34,11 @@ export const transformData = (html: string, data: PostData): TransformedPostData
   fixedData = _.mapValues(fixedData, (value, key) => {
     if (key === CALLBACK_ID) {
       const grid = $(`table[id*="${value}"]`);
-      if (!grid) {
-        logger.warn(`Не удалось скорректировать значение поля ${CALLBACK_ID}`);
+      if (!grid.length) {
+        logger.error(`Не удалось скорректировать значение поля ${CALLBACK_ID}`);
+        return value;
       }
-      return grid ? grid.attr('id').replace(/_/g, '$') : value;
+      return grid.attr('id').replace(/_/g, '$');
     }
     return value;
   });

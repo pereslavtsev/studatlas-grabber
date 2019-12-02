@@ -28,13 +28,13 @@ const onFulfilled = ({ disabledSources, version }: Academy) => async config => {
         break;
       }
       // доп. запрос для получения токенов и корректировки параметров запроса
-      const helperClient = axios.create({
+      const helperClient = axios.create();
+      helperClient.interceptors.request.use(AxiosLogger.requestLogger);
+      const { data, headers } = await helperClient.get(config.url, {
         baseURL: config.baseURL,
         params: config.params,
         withCredentials: true,
       });
-      helperClient.interceptors.request.use(AxiosLogger.requestLogger);
-      const { data, headers } = await helperClient.get(config.url);
 
       switch (version) {
         case AcademyVersion.Classic: {
