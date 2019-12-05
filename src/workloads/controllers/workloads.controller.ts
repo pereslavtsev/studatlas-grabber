@@ -23,23 +23,13 @@ export class WorkloadsController {
 
   @GrpcMethod('WorkloadService', 'ListGroupsWorkloads')
   @UsePipes(new ValidationPipe())
-  async findByFacultyId({ academyId, facultyId, years }: ListGroupsWorkloadsDto) {
-    const workloads = await this.workloadsService.fetchByFacultyId({
-      academyId,
-      facultyId,
-      years,
-    });
-    return { data: workloads };
+  findByFacultyId(listGroupsWorkloadsDto: ListGroupsWorkloadsDto) {
+    return this.workloadsService.fetchByFacultyId(listGroupsWorkloadsDto);
   }
 
   @GrpcMethod('WorkloadService', 'ListTeachersWorkloads')
   @UsePipes(new ValidationPipe())
-  async findByDivisionId({ academyId, divisionId, years }: ListTeachersWorkloadsDto) {
-    const workloads = await this.workloadsService.fetchByDivisionId({
-      academyId,
-      divisionId,
-      years,
-    });
-    return { data: workloads };
+  async findByDivisionId(listTeachersWorkloadsDto: ListTeachersWorkloadsDto) {
+    return this.workloadsService.fetchByDivisionId(listTeachersWorkloadsDto);
   }
 }

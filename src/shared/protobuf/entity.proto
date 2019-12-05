@@ -6,3 +6,13 @@ message GetEntityRequest {
     int32 id = 1;
     string academy_id = 2;
 }
+
+message Meta {
+  message Page {
+    int32 page = 1;
+    int32 allPages = 2;
+    int32 limit = 3;
+    int32 total = 4;
+  }
+  Page page = 1;
+}

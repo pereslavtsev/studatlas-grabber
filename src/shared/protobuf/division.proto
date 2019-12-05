@@ -24,8 +24,10 @@ message DivisionRelationship {
 
 message ListDivisionsRequest {
     string academy_id = 1;
+    int32 page = 2;
 }
 
 message ListDivisionsResponse {
     repeated Division data = 1;
+    Meta meta = 2;
 }

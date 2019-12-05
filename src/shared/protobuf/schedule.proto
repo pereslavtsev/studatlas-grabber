@@ -21,6 +21,7 @@ message ListFacultyScheduleRequest {
     int32 faculty_id = 2;
     string years = 3;
     int32 semester = 4;
+    int32 page = 5;
 }
 
 message ListScheduleResponse {

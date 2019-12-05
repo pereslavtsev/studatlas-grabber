@@ -15,7 +15,7 @@ export const SPECIALITY_SCHEMA: Schema = {
     {
       name: 'name',
       type: 'text',
-      columns: ['Название Специальности'],
+      columns: ['Название Специальности', 'Направления/специальности'],
     },
     {
       name: 'facultyId',

@@ -16,9 +16,9 @@ message Speciality {
     string name = 3;
     string code = 4;
     string qualification = 5;
-    string division_id = 6;
+    int32 division_id = 6;
     string division = 7;
-    string faculty_id = 8;
+    int32 faculty_id = 8;
     string faculty = 9;
 }
 
@@ -28,13 +28,16 @@ message SpecialityRelationship {
 
 message ListSpecialitiesRequest {
     string academy_id = 1;
+    int32 page = 2;
 }
 
 message ListFacultySpecialitiesRequest {
     string academy_id = 1;
     int32 faculty_id = 2;
+    int32 page = 3;
 }
 
 message ListSpecialitiesResponse {
     repeated Speciality data = 1;
+    Meta meta = 2;
 }
