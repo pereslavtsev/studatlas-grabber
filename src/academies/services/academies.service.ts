@@ -9,9 +9,12 @@ import { Academy } from '../interfaces/academy.interface';
 
 @Injectable()
 export class AcademiesService {
-  constructor(
-    @InjectModel('Academy') private readonly academyModel: Model<Academy>,
-  ) {}
+  constructor(@InjectModel('Academy') private readonly academyModel: Model<Academy>) {}
+
+  searchByName(term: string): Promise<Academy[]> {
+    const regExp = new RegExp(`.*${term}.*`, 'i');
+    return this.academyModel.find({ $or: [{ name: regExp }, { abbreviation: regExp }] }).exec();
+  }
 
   async findById(id: string): Promise<Academy> {
     let academy;

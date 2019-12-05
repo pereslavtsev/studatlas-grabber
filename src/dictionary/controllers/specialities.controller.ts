@@ -12,25 +12,23 @@ export class SpecialitiesController {
 
   @GrpcMethod('SpecialityService', 'GetSpeciality')
   @UsePipes(new ValidationPipe())
-  async findOne({ id, academyId }: GetSpecialityDto) {
-    const speciality = await this.specialitiesService.fetchById(id, academyId);
-    if (!speciality) {
+  async findOne(getSpecialityDto: GetSpecialityDto) {
+    const response = await this.specialitiesService.fetchById(getSpecialityDto);
+    if (!response.data.length) {
       throw new GrpcNotFoundException('Speciality is not found');
     }
-    return { data: [speciality] };
+    return response;
   }
 
   @GrpcMethod('SpecialityService', 'ListSpecialities')
   @UsePipes(new ValidationPipe())
-  async findAll({ academyId }: ListSpecialitiesDto) {
-    const specialities = await this.specialitiesService.fetchAll(academyId);
-    return { data: specialities };
+  findAll(listSpecialitiesDto: ListSpecialitiesDto) {
+    return this.specialitiesService.fetchAll(listSpecialitiesDto);
   }
 
   @GrpcMethod('SpecialityService', 'ListFacultySpecialities')
   @UsePipes(new ValidationPipe())
-  async findByFacultyId({ facultyId, academyId }: ListFacultySpecialitiesDto) {
-    const specialities = await this.specialitiesService.fetchByFacultyId(facultyId, academyId);
-    return { data: specialities };
+  findByFacultyId(listFacultySpecialitiesDto: ListFacultySpecialitiesDto) {
+    return this.specialitiesService.fetchByFacultyId(listFacultySpecialitiesDto);
   }
 }

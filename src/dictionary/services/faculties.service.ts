@@ -1,32 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
+import { GetFacultyDto } from '../dto/get-faculty-request.interface';
+import { ListFacultiesDto } from '../dto/list-faculties.dto';
 import { DictionaryFilter } from '../enums/dictionary-filter.enum';
-import { Faculty } from '../interfaces/faculty.interface';
 import { FACULTY_SCHEMA } from '../mocks/faculty-schema.mock';
 
 @Injectable()
 export class FacultiesService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  protected async fetch(academyId: string, params?: any): Promise<Faculty[]> {
-    const client = await this.grabberService.create(academyId, 'dictionary');
-    const { data } = await client.request({
-      params: {
-        mode: DictionaryFilter.Faculty,
-        ...params,
+  protected async fetch({ academyId, page }: ListFacultiesDto, params?: any) {
+    return this.grabberService.extractFormDataGrid({
+      schema: FACULTY_SCHEMA,
+      requestConfig: {
+        params: {
+          mode: DictionaryFilter.Faculty,
+          ...params,
+        },
       },
+      sourceId: 'dictionary',
+      academyId,
+      name: 'ucFacultets',
+      page,
     });
-    const dataGrid = new DataGrid('table[id*="ucFacultets"]', data);
-    return dataGrid.extract(FACULTY_SCHEMA);
   }
 
-  async fetchById(id: number, academyId: string) {
-    const faculties = await this.fetch(academyId, { id });
-    return faculties.pop();
+  async fetchById({ id, ...params }: GetFacultyDto) {
+    const { data, ...fields } = await this.fetch(params, { id });
+    return {
+      ...fields,
+      data: [data.pop()],
+    };
   }
 
-  fetchAll(academyId: string) {
-    return this.fetch(academyId);
+  fetchAll(listFacultiesDto: ListFacultiesDto) {
+    return this.fetch(listFacultiesDto);
   }
 }

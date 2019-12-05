@@ -10,7 +10,7 @@ export const STATISTICS_SCHEMA: Schema = {
     {
       name: 'division',
       type: 'text',
-      columns: ['Название Кафедры'],
+      columns: ['Название Кафедры', 'Название'],
     },
     {
       name: 'facultyId',

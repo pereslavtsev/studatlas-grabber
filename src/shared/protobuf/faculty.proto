@@ -24,8 +24,10 @@ message FacultyRelationship {
 
 message ListFacultiesRequest {
     string academy_id = 1;
+    int32 page = 2;
 }
 
 message ListFacultiesResponse {
     repeated Faculty data = 1;
+    Meta meta = 2;
 }

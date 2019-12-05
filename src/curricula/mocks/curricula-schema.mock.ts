@@ -5,12 +5,12 @@ export const CURRICULA_SCHEMA: Schema = {
     {
       name: 'id',
       type: 'id',
-      columns: ['Имя плана'],
+      columns: ['Имя плана', 'Веб-версия'],
     },
     {
       name: 'name',
       type: 'text',
-      columns: ['Имя плана'],
+      columns: ['Имя плана', 'Веб-версия'],
     },
     {
       name: 'speciality',

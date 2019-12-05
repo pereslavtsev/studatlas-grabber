@@ -5,6 +5,7 @@ package grabber;
 service AcademyService {
     rpc GetAcademy (GetAcademyRequest) returns (ListAcademiesResponse) {}
     rpc ListAcademies (ListAcademiesRequest) returns (ListAcademiesResponse) {}
+    rpc SearchAcademies (SearchAcademiesRequest) returns (ListAcademiesResponse) {}
 }
 
 message Academy {
@@ -28,3 +29,8 @@ message ListAcademiesRequest {}
 message ListAcademiesResponse {
     repeated Academy data = 1;
 }
+
+message SearchAcademiesRequest {
+    string term = 1;
+}
+

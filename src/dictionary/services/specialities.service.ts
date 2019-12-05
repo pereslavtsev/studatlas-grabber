@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { DataGrid } from '../../grabber/classes/data-grid.class';
 import { GrabberService } from '../../grabber/services/grabber.service';
+import { DataResponse } from '../../shared/interfaces/data-response.interface';
+import { GetSpecialityDto } from '../dto/get-speciality.dto';
+import { ListFacultySpecialitiesDto } from '../dto/list-faculty-specialities.dto';
+import { ListSpecialitiesDto } from '../dto/list-specialities.dto';
 import { DictionaryFilter } from '../enums/dictionary-filter.enum';
 import { Speciality } from '../interfaces/speciality.interface';
 import { SPECIALITY_SCHEMA } from '../mocks/speciality-schema.mock';
@@ -9,34 +12,45 @@ import { SPECIALITY_SCHEMA } from '../mocks/speciality-schema.mock';
 export class SpecialitiesService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  protected async fetch(academyId: string, params?: any): Promise<Speciality[]> {
-    const client = await this.grabberService.create(academyId, 'dictionary');
-    const { data } = await client.request({
-      params: {
-        mode: DictionaryFilter.Speciality,
-        ...params,
+  protected fetch(
+    { academyId, page }: ListSpecialitiesDto,
+    params?: any,
+  ): Promise<DataResponse<Speciality>> {
+    return this.grabberService.extractFormDataGrid({
+      academyId,
+      sourceId: 'dictionary',
+      name: 'ucSpets',
+      requestConfig: {
+        method: 'post',
+        params: {
+          mode: DictionaryFilter.Speciality,
+          ...params,
+        },
       },
+      schema: SPECIALITY_SCHEMA,
+      page,
     });
-    const dataGrid = new DataGrid('table[id*="ucSpets"]', data);
-    return dataGrid.extract(SPECIALITY_SCHEMA);
   }
 
-  async fetchById(id: number, academyId: string) {
-    const specialities = await this.fetch(academyId, {
+  async fetchById({ id, ...params }: GetSpecialityDto) {
+    const response = await this.fetch(params, {
       id,
       f: DictionaryFilter.Speciality,
     });
-    return specialities.pop();
+    return {
+      ...response,
+      data: [response.data.pop()],
+    };
   }
 
-  fetchByFacultyId(facultyId: number, academyId: string) {
-    return this.fetch(academyId, {
+  fetchByFacultyId({ facultyId, ...params }: ListFacultySpecialitiesDto) {
+    return this.fetch(params, {
       f: DictionaryFilter.Faculty,
       id: facultyId,
     });
   }
 
-  fetchAll(academyId: string) {
-    return this.fetch(academyId);
+  fetchAll(listSpecialitiesDto: ListSpecialitiesDto) {
+    return this.fetch(listSpecialitiesDto);
   }
 }

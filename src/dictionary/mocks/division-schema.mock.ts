@@ -20,7 +20,7 @@ export const DIVISION_SCHEMA: Schema = {
     {
       name: 'head',
       type: 'text',
-      columns: ['ЗавКафедрой'],
+      columns: ['ЗавКафедрой', 'Зав Кафедрой'],
     },
     {
       name: 'phone',
