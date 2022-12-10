@@ -47,7 +47,7 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.7.7",
     "nestjs-config": "^1.4.4",
-    "qs": "^6.9.1",
+    "qs": "^6.9.7",
     "query-string": "^6.8.3",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.5.3",
